@@ -1,0 +1,294 @@
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amssymb,latexsym,amsmath,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{bm}
+
+\newtheorem{definition}{Definición}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{observation}{Observación}[section]
+\newtheorem{proposition}{Proposición}[section]
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\Rn}{\mathbb{R}^{n}}
+\newcommand{\Rp}{\mathbb{R}^{p}}
+\newcommand{\Rq}{\mathbb{R}^{q}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\mv}{\overline{\mu}}
+\newcommand{\lv}{\overline{\lambda}}
+\newcommand{\thv}{\overline{\theta}}
+\newcommand{\bv}{\overline{b}}
+\newcommand{\x}{\overline{x}}
+\newcommand{\xz}{\overline{x}_{0}}
+\newcommand{\y}{\overline{y}}
+\newcommand{\z}{\overline{0}_{n}}
+\newcommand{\zp}{\overline{0}_{p}}
+\newcommand{\Jxz}{J(\overline{x}_{0})}
+
+\newcommand{\Sp}{1,2,\ldots, p}
+\newcommand{\Sq}{1,2,\ldots, q}
+
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\xd}{(X,d)}
+
+\newcommand{\po}{p_{*}}
+\newcommand{\xo}{\overline{x}_{*}}
+\newcommand{\deo}{d^{*}}
+\newcommand{\muo}{\overline{\mu}^{*}}
+\newcommand{\lao}{\overline{\lambda}^{*}}
+\newcommand{\mlo}{(\overline{\mu}^{*},\overline{\lambda}^{*})}
+
+\newcommand{\xc}{\widetilde{x}}
+\newcommand{\muc}{\widetilde{\mu}}
+\newcommand{\lac}{\widetilde{\lambda}}
+
+
+\addtolength{\oddsidemargin}{-.875in}
+	\addtolength{\evensidemargin}{-.875in}
+	\addtolength{\textwidth}{1.75in}
+
+	\addtolength{\topmargin}{-.875in}
+	\addtolength{\textheight}{1.75in}
+
+
+
+
+\begin{document}
+\chapter{Cálculo Diferencial Multivariable}
+\chapter{Convexidad}
+\chapter{Optimización}
+\chapter{Dualidad de Lagrange}
+Los problemas de optimización restricta e irrestricta tienen ventajas y desventajas. En general, no es más fácil resolver uno u otro. Sin embargo, resulta que bajo ciertas condiciones hay una conexión entre ambos tipos de problemas.\\
+
+
+Pensemos en el problema de optimización restricta $(P)$
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} f(\x) \\
+\text{s.a.}\ \
+& g_i(\x) \leq 0, \; i = \Sp \\
+& h_j(\x)=0, \; j=\Sq
+\end{aligned}
+\end{equation*}
+
+\noindent
+¿Existirá alguna manera de generar un problema de optimización sin restricciones que tenga las mismas soluciones óptimas que $(P)$? Podemos empezar por considerar una función de costo aumentada que tenga a las restricciones integradas:
+$$f(\x)+\sum_{i=1}^{p}\mu_{i} g_{i}(\x) + \sum_{j=1}^{q}\lambda_{j} h_{j}(\x)$$
+Aquí los coeficientes $\mu_{1},\ldots,\mu_{p}, \lambda_{1},\ldots,\lambda_{q}$ son números reales fijos. Cada uno se puede interpretar como un costo/recompensa por no respetar/respetar la restricción correspondiente. La pregunta fundamental es: ¿habrá manera de escoger dichos coeficientes de modo que minimizar sin restricciones la función de costo aumentada sea equivalente a resolver el problema $(P)$? La respuesta es parte de lo que se conoce como teoría de dualidad de Lagrange, la cual se expone brevemente a continuación.\\
+
+\section{El problema dual}
+Definimos $\La: D\times\Rp\times\Rq\subseteq\Rn\times\Rp\times\Rq\rightarrow\R$ $$\La(\x,\mv,\lv)=f(\x)+\sum_{i=1}^{p}\mu_{i} g_{i}(\x) + \sum_{j=1}^{q}\lambda_{j} h_{j}(\x)$$
+conocida como la función lagrangiana o lagrangiano. Representa la función de costo aumentada antes mencionada con la diferencia de que aquí $\mu_{1},\ldots,\mu_{p}, \lambda_{1},\ldots,\lambda_{q}$ son variables al igual que el vector $\x$.\\
+
+También se define $g:\Rp\times\Rq\rightarrow\R\cup\{-\infty\}$ (reales extendidos) como
+$$g(\mv, \lv)= \underset{\x\in D}{\text{ínf}}\La(\x,\mv,\lv)$$
+Notamos que en principio el dominio de $g$ es todo el espacio $\Rp\times\Rq$. Podemos interpretar $g(\mv,\lv)$ como sigue: escogemos los coeficientes de costo $\mu_{1},\ldots,\mu_{p}, \lambda_{1},\ldots,\lambda_{q}$, los fijamos y resolvemos el problema irrestricto
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}}\ \ \ f(\x)+\sum_{i=1}^{p}\mu_{i} g_{i}(\x) + \sum_{j=1}^{q}\lambda_{j} h_{j}(\x) \\
+\end{aligned}
+\end{equation*}\\
+
+La función objetivo del problema anterior podría no estar acotada inferiormente o podría si estarlo sin alcanzar su valor óptimo. Es por eso que en la definición de $g$ usamos ínfimo en vez de mínimo. En el primer caso, tendríamos que $g(\mv, \lv)=-\infty$. Esto es lo que permite tomar a todo el espacio $\Rp\times\Rq$ como dominio de $g$ siempre y cuando el codominio incluya al valor extendido $-\infty$.
+
+\begin{observation} Se tiene que:
+\begin{itemize}
+\item[(i)] El conjunto $A=\{(\mv,\lv)\in\Rp\times\Rq: g(\mv,\lv)>-\infty\}$ es convexo.
+\item[(ii)] $g$ es cóncava en $\Rp\times\Rq$. Por lo tanto también lo es en $A$.
+\item[(iii)] $\forall\x\in S$ $\forall \mv\geq\zp$ $\forall\lv\in\Rq$
+$$\La(\x,\mv, \lv)\leq f(\x)$$
+\item[(iv)] $\forall \mv\geq\zp$ $\forall\lv\in\Rq$
+$$g(\mv,\lv)\leq f(\x)\ \ \forall\x \in S$$
+\item[(v)] $\forall \mv\geq\zp$ $\forall\lv\in\Rq$
+$$g(\mv,\lv)\leq\po$$
+\end{itemize}
+\end{observation}
+
+Los últimos dos incisos de la observación anterior son la clave de todo: cualquier valor $g(\mv,\lv)$ con $\mv\geq\zp$ es una cota inferior para todos los valores de $f(\x)$ con $\x\in S$. Esto implica que, en particular, cualquier valor $g(\mv,\lv)$ con $\mv\geq\zp$ es siempre menor o igual a $\po$, el valor óptimo del problema $(P)$. ¿Será que si encontramos el valor más grande de $g(\mv,\lv)$ con $\mv\geq\zp$, este coincida con $\po$? Sería un buen avance en lo que se refiere a resolver el problema $(P)$, pues ya solamente nos faltaría encontrar $\xo$ sabiendo $\po$.\\
+
+Así las cosas, nos gustaría resolver el siguiente problema $(D)$:
+\begin{equation*}
+\begin{aligned}
+& \underset{(\mv,\lv)\in A}{\text{máx}} g(\mv,\lv) \\
+& \text{s.a.}\ \ \mv\geq\zp
+\end{aligned}
+\end{equation*}
+
+ Vemos que en el problema $(D)$, el dominio de $g$ se toma como el conjunto $A=\{(\mv,\lv)\in\Rp\times\Rq: g(\mv,\lv)>-\infty\}$. Esto se debe a que si $g(\mv,\lv)=-\infty$ con $\mv\geq\zp$, la desigualdad $g(\mv,\lv)\leq\po$ sigue siendo cierta pero realmente no aporta información sobre el valor de $\po$.\\
+
+
+ Vale la pena notar que, por el inciso $(iv)$ de la observación anterior, si el problema $(P)$ no es acotado inferiormente entonces el problema $(D)$ no es factible. De manera similar, si el problema $(D)$ no es acotado superiormente entonces el problema $(P)$ no es factible.\\
+
+
+ Denotamos con $\deo$ al valor óptimo de $(D)$. Si $(\muo, \lao)$ es un punto óptimo de $(D)$ entonces $\deo=g\mlo>-\infty$.\\
+
+
+\begin{observation}
+En este contexto:
+\begin{itemize}
+\item[(i)] El problema $(D)$ siempre es un problema convexo pues es equivalente a:
+\begin{equation*}
+\begin{aligned}
+& \underset{(\mv,\lv)\in A}{\text{mín}} -g(\mv,\lv) \\
+& \text{s.a.}\ \ -\mv\leq\zp
+\end{aligned}
+\end{equation*}
+\item[(ii)] A los problemas $(P)$ y $(D)$ se les llama \emph{problema primal} y \emph{problema dual}, respectivamente.
+\item[(iii)] Siempre se tiene que $\deo\leq\po$. A la relación de desigualdad anterior se le conoce como \emph{dualidad débil}.
+\item[(iv)] A la diferencia $\po - \deo$ se le llama \emph{brecha de dualidad}.
+\item[(v)] A la relación $\deo=\po$ se le llama \emph{dualidad fuerte}.
+
+\end{itemize}
+\end{observation}
+
+\section{Dualidad Fuerte}
+\noindent
+Veamos algunas consecuencias que tiene la dualidad fuerte.
+
+
+\begin{proposition}
+Supongamos que $(P)$ y $(D)$ tienen solución y que hay dualidad fuerte. Sean $\xo$ y $\mlo$ puntos óptimos de $(P)$ y $(D)$ respectivamente. Entonces:
+\begin{itemize}
+\item[(i)] $k=\La(\ \cdot\ ,\muo, \lao):D\subseteq\Rn\rightarrow\R$ alcanza un mínimo global en $\xo$.
+\item[(ii)] $\mu_{i}^{*}g_{i}(\xo)=0$ $\forall i=\Sp$.
+\end{itemize}
+\end{proposition}
+\begin{proof}
+Tenemos que:
+\begin{equation*}
+\begin{aligned}
+f(\xo)&=\po &&\text{... definición}\\
+&=\deo &&\text{... dualidad fuerte}\\
+&=g(\muo,\lao) &&\text{... definición}\\
+&=\underset{\x\in D}{\text{ínf}}\La(\x,\mv,\lv) &&\text{... definición}\\
+&=\underset{\x\in D}{\text{ínf}} \left( f(\x)+\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\x) + \sum_{j=1}^{q}\lambda_{j}^{*} h_{j}(\x) \right) &&\text{... definición}\\
+&\leq f(\xo)+\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\xo) + \sum_{j=1}^{q}\lambda_{j}^{*} h_{j}(\xo) &&\text{... $\xo\in S\subseteq D$}\\
+&\leq f(\xo)
+\end{aligned}
+\end{equation*}
+La última desigualdad se tiene porque $g_{i}(\xo)\leq0$, $\mu_{i}^{*}\geq0$ y $h_{j}(\xo)=0$ $\forall i=\Sp\ \ \forall j=\Sq$. Se sigue que las últimas dos desigualdades se cumplen con igualdad i.e. toda la cadena consta de igualdades. Entonces:
+$$f(\xo)=\underset{\x\in D}{\text{ínf}}\La(\x,\mv,\lv)$$
+lo cual significa que $k(\x)=\La(\x,\muo, \lao)$ alcanza un mínimo global en $\xo$.
+Por otra parte
+\begin{equation*}
+\begin{aligned}
+f(\xo)&=f(\xo)+\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\xo) + \sum_{j=1}^{q}\lambda_{j}^{*} h_{j}(\xo)\\
+\Rightarrow 0&=\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\xo) + \sum_{j=1}^{q}\lambda_{j}^{*} h_{j}(\xo)\\
+\Rightarrow 0&=\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\xo)
+\end{aligned}
+\end{equation*}
+Como para cada $i=\Sp$ se cumple que $g_{i}(\xo)\leq0$ y $\mu_{i}^{*}\geq0$, todos los sumandos de la última suma son no--positivos. Esto implica $\mu_{i}^{*}g_{i}(\xo)=0$ $\forall i=\Sp$.
+\end{proof}
+
+\noindent
+Con este resultado podemos responder la pregunta fundamental planteada la principio de la sección.
+\begin{proposition}
+Supongamos que $(P)$ y $(D)$ tienen solución y que hay dualidad fuerte. Sea $\mlo$ un punto óptimo de $(D)$. Consideremos el problema $(P)'$
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}}\ \ \ f(\x)+\sum_{i=1}^{p}\mu_{i}^{*} g_{i}(\x) + \sum_{j=1}^{q}\lambda_{j}^{*} h_{j}(\x) \\
+\end{aligned}
+\end{equation*}\\
+Si $(P)'$ tiene un único punto óptimo $\xc\in\Rn$, entonces $\xc$ es punto óptimo de $(P)$ y es el único.
+\end{proposition}
+\begin{proof}
+Esto es consecuencia de la proposición anterior.
+\end{proof}
+
+Sigamos con las consecuencias que tiene la dualidad fuerte agregando ahora la diferenciabilidad del problema $(P)$.
+\begin{theorem}(Condiciones de Karush-Kuhn-Tucker)
+Supongamos que los problemas $(P)$ y $(D)$ tienen solución y que hay dualidad fuerte.  Sean $\xo$ y $\mlo$ puntos óptimos de $(P)$ y $(D)$ respectivamente. Si el problema $(P)$ es diferenciable, entonces: %basta con pedir xoptimo punto interior de D y f,g,h derivables en xoptimo
+\begin{itemize}
+\item[(i)] $g_{i}(\xo)\leq0,\ \ h_{j}(\xo)=0$ $\forall i=\Sp\ \ \forall j=\Sq$
+\item[(ii)] $\mu_{i}^{*}\geq0$ $\forall i=\Sp$
+\item[(iii)] $\mu_{i}^{*}g_{i}(\xo)=0$ $\forall i=\Sp$
+\item[(iv)] $\nabla f(\xo)+\sum_{i=1}^{p}\mu_{i}^{*}\nabla g_{i}(\xo) + \sum_{j=1}^{q}\lambda_{j}^{*}\nabla h_{j}(\xo)=\z$
+\end{itemize}
+\end{theorem}
+\begin{proof}
+Las condiciones $(i)$ y $(ii)$ se siguen, respectivamente, de que $\xo$ es un punto factible de $(P)$ y $\mlo$ es un punto factible de $(D)$. La condición $(iii)$ se sigue de la proposición anterior. Para $(iv)$ notamos que, por la proposición anterior, $k=\La(\ \cdot\ ,\muo, \lao):D\subseteq\Rn\rightarrow\R$ alcanza un mínimo global en $\xo$. La Condición Necesaria de Primer Orden garantiza que $\nabla k(\xo)=\z$ que es precisamente la condición $(iv)$.
+\end{proof}
+
+Las cuatro condiciones de Karush--Kuhn--Tucker (KKT) son condiciones necesarias que deben cumplir las soluciones de $(P)$ y $(D)$ cuando hay dualidad fuerte. Resulta que cuando hay convexidad, también son condiciones suficientes como lo muestra el siguiente teorema.
+
+\begin{theorem}
+Supongamos que el problema $(P)$ es convexo y diferenciable. Sean $\xc\in\Rn$, $(\muc, \lac)\in\Rp\times\Rq$ tales que:
+\begin{itemize}
+\item[(i)] $g_{i}(\xc)\leq0,\ \ h_{j}(\xc)=0$ $\forall i=\Sp\ \ \forall j=\Sq$
+\item[(ii)] $\muc_{i}\geq0$ $\forall i=\Sp$
+\item[(iii)] $\muc_{i}g_{i}(\xc)=0$ $\forall i=\Sp$
+\item[(iv)] $\nabla f(\xc)+\sum_{i=1}^{p}\muc_{i}\nabla g_{i}(\xc) + \sum_{j=1}^{q}\lac_{j}\nabla h_{j}(\xc)=\z$
+\end{itemize}
+Entonces $\xc$ y $(\muc,\lac)$ son puntos óptimos de $(P)$ y $(D)$ respectivamente. Además, $g(\muc,\lac)=f(\xc)$, i.e. hay dualidad fuerte.
+\end{theorem}
+\begin{proof}
+La condición $(i)$ garantiza que $\xc\in S\subseteq D$ i.e. $\xc$ es un punto factible de $(P)$.\\
+Sea $k=\La(\x,\muc, \lac):D\subseteq\Rn\rightarrow\R$. Por la condición $(ii)$, $k$ es convexa en $D$. Las hipótesis garantizan que $k$ es diferenciable en $D$ y la condición $(iv)$ implica que $\nabla k(\xc)=\z$. Por lo tanto, $k$ alcanza un mínimo global en $\xc$. Así las cosas:
+\begin{equation*}
+\begin{aligned}
+f(\xc)&=f(\xc)+\sum_{i=1}^{p}\muc_{i} g_{i}(\xc) + \sum_{j=1}^{q}\lac_{j} h_{j}(\xc) &&\text{... condiciones (i) y (iii)}\\
+&=k(\xc) &&\text{... definición}\\
+&= \underset{\x\in D}{\text{ínf}} k(\x) &&\text{... $k$ alcanza un mínimo global en $\xc$} \\
+&= \underset{\x\in D}{\text{ínf}}\La(\x,\mv,\lv) &&\text{... definición}\\
+&=g(\muc,\lac) &&\text{... definición}
+\end{aligned}
+\end{equation*}
+Tenemos entonces que $f(\xc)=g(\muc,\lac)$. Esto implica que $(\lac,\muc)\in A$, i.e. $(D)$ es factible. Veamos que $\xc$ es un punto óptimo de $(P)$. Si no lo fuése, tendríamos que $\exists\x \in S$ tal que $f(\x)<f(\xc)$. Entonces:
+\begin{equation*}
+\begin{aligned}
+g(\muc,\lac)&\leq\deo &&\text{... definición}\\
+&\leq\po &&\text{... dualidad débil}\\
+&\leq f(\x) &&\text{... definición}\\
+&<f(\xc)
+\end{aligned}
+\end{equation*}
+lo cual es una contradicción. De manera similar se verifica que $(\muc,\lac)$ es un punto óptimo de $(D)$. Por último, la ecuación $f(\xc)=g(\muc,\lac)$ implica que hay dualidad fuerte.
+\end{proof}
+
+Hemos visto algunas consecuencias de la dualidad fuerte. Finalizamos con el siguiente teorema que da condiciones suficientes para garantizarla. La demostración se omite.
+\begin{theorem}{(Slater)}\\
+Supongamos que:
+\begin{itemize}
+\item[(i)] El problema $(P)$ es convexo y acotado inferiormente.
+\item[(ii)] El dominio $D$ es abierto (y por el inciso anterior, convexo).
+\item[(iii)] $\exists\widetilde{x}\in S$ tal que $g_{i}(\widetilde{x})<0\ \ \forall i\in\Sp$ si $g_{i}$ no es afín (condición de regularidad).
+\end{itemize}
+Entonces, el problema $(D)$ tiene solución y hay dualidad fuerte. %este teorema es válido sin importar si el problema (P) tiene solución o si es o no acotado
+\end{theorem}
+
+\section*{Ejercicios}
+
+
+\chapter{Optimización 2}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
