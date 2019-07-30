@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amssymb,latexsym,amsmath,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{bm}
+
+\newtheorem{definition}{Definición}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{observation}{Observación}[section]
+\newtheorem{proposition}{Proposición}[section]
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\Rn}{\mathbb{R}^{n}}
+\newcommand{\Rp}{\mathbb{R}^{p}}
+\newcommand{\Rq}{\mathbb{R}^{q}}
+\newcommand{\R}{\mathbb{R}}
+
+\newcommand{\mv}{\overline{\mu}}
+\newcommand{\lv}{\overline{\lambda}}
+\newcommand{\thv}{\overline{\theta}}
+\newcommand{\wv}{\overline{w}}
+\newcommand{\bv}{\overline{b}}
+\newcommand{\x}{\overline{x}}
+\newcommand{\xz}{\overline{x}_{0}}
+\newcommand{\y}{\overline{y}}
+\newcommand{\z}{\overline{0}_{n}}
+\newcommand{\zp}{\overline{0}_{p}}
+\newcommand{\Jxz}{J(\overline{x}_{0})}
+
+\newcommand{\Sp}{1,2,\ldots, p}
+\newcommand{\Sq}{1,2,\ldots, q}
+\newcommand{\Sn}{1,2,\ldots, n}
+\newcommand{\Sm}{1,2,\ldots, m}
+
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\xd}{(X,d)}
+
+\newcommand{\po}{p_{*}}
+\newcommand{\xo}{\overline{x}_{*}}
+\newcommand{\deo}{d^{*}}
+\newcommand{\muo}{\overline{\mu}^{*}}
+\newcommand{\lao}{\overline{\lambda}^{*}}
+\newcommand{\mlo}{(\overline{\mu}^{*},\overline{\lambda}^{*})}
+
+\newcommand{\xc}{\widetilde{x}}
+\newcommand{\muc}{\widetilde{\mu}}
+\newcommand{\lac}{\widetilde{\lambda}}
+
+\newcommand{\Dat}{\mathbb{D}}
+\newcommand{\nw}{\|\wv\|}
+
+\addtolength{\oddsidemargin}{-.875in}
+	\addtolength{\evensidemargin}{-.875in}
+	\addtolength{\textwidth}{1.75in}
+
+	\addtolength{\topmargin}{-.875in}
+	\addtolength{\textheight}{1.75in}
+
+\begin{document}
+\title{Máquinas de vectores de soporte}
+\section{El Problema de Clasificación}
+
+
+\begin{definition}
+Decimos que un problema es de clasificación binaria si el conjunto de datos es de la siguiente forma:
+$$\Dat=\{(\x_{i}, y_i): \x_{i}\in\Rn,\ \ \y_{i}\in\{\pm1\}\ \ \forall i = \Sm\}$$
+\end{definition}
+
+En este capítulo, a menos que se especifique lo contrario, solamente hablaremos de conjuntos de datos para problemas de clasificación binaria.
+Empezaremos estudiando conjuntos de datos que si se pueden separar con un hiperplano. Empecemos con la definición.
+
+\begin{definition}
+Dados $\wv\in\Rn$ y $b\in\R$, distinguimos los siguientes tres conjuntos:
+\begin{itemize}
+\item[(i)] $H^{+}(\wv, b)=\{\x\in\Rn:\wv^{T}\x+b>0\}$
+\item[(ii)] $H(\wv, b)=\{\x\in\Rn:\wv^{T}\x+b=0\}$
+\item[(iii)] $H^{-}(\wv, b)=\{\x\in\Rn:\wv^{T}\x+b<0\}$
+\end{itemize}
+Al conjunto $H(\wv, b)$ se le llama \emph{hiperplano} y a los conjuntos $H^{+}(\wv, b), H^{+}(\wv, b)$ se les llama \emph{semiespacios}.
+\end{definition}
+
+\begin{definition}
+Sea $\Dat$ un conjunto de datos. 
+\begin{itemize}
+\item[(i)] Decimos que el hiperplano $H=H(\wv, b)$ separa a $\Dat$ si y solamente si 
+$$s(\wv^{T}\x_{i}+b)=y_{i}\ \ \forall i=\Sm$$
+\item[(ii)] Decimos que $\Dat$ es linealmente separable si y solamente existe al menos un hiperplano que separa a $\Dat$.
+\end{itemize}
+\end{definition}
+\section{El Algoritmo del Perceptrón}
+\section{Máquinas de vectores de soporte. Caso Linealmente separable.}
+
+Definiremos el margen de un hiperplano respecto a un conjunto de datos. 
+\begin{definition}
+Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano. Definimos el margen de $H$ respecto a $\Dat$ como
+$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}$$ 
+\end{definition}
+Hasta este punto, podemos enunciar el problema de encontrar un hiperplano óptimo de la siguiente manera:
+\begin{center}
+Encontrar $\wv\in\Rn$ y $b\in\Rn$ tales que:\\
+\begin{itemize}
+\item $\gamma_{\Dat}(\wv, b)$ es lo más grande posible
+\item $H(\wv, b)$ separa a $\Dat$\\
+\end{itemize}
+\end{center}
+
+Iremos transformando este problema poco a poco hasta tenerlo en una forma matemáticamente tratable. Todo dependerá de que podamos expresar las dos condiciones de una manera fácil de manipular.
+
+Empezamos con una definición de separabilidad un poco más manejable.
+\begin{proposition}
+Sea $\Dat$ un conjunto de datos. El hiperplano $H$ dado por $(\wv, b)$ separa a $\Dat$ si y solamente si
+$$y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sn$$
+\end{proposition}
+\begin{proof}
+Supongamos que el hiperplano $H$ dado por $(\wv, b)$ separa a $\Dat$ i.e. $s(\wv^{T}\x_{i}+b)=y_i\ \ \forall i\in\Sm$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Como $h(\x_{i})= y_{i}$ tenemos que si $y_{i}=1$, entonces $\wv^{T}\x_{i}+b>0$ de modo que $y_{i}(\wv^{T}\x_{i}+b)>0$. De manera similar, si $y_{i}=-1$, entonces $\wv^{T}\x_{i}+b<0$ de modo que $y_{i}(\wv^{T}\x_{i}+b)<0$.\\
+Supongamos ahora que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sn$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Sabemos que $y_{i}(\wv ^{T}\x_{i}+b)>0$. Si $y_{i}=1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b>0$ de modo que $s(\wv ^{T}\x_{i}+b)=1=y_{i}$. Si $y_{i}=-1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b<0$ de modo que $s(\wv ^{T}\x_{i}+b)=-1=y_{i}$.
+\end{proof}
+
+Esta proposición nos dice que la separabilidad está codificada a través de las cantidades $y_{i}(\wv ^{T}\x_{i}+b)$.
+
+Pensemos ahora en el asunto de las distancias. ¿Cómo se calcula distancia de un punto a un hiperplano? Se sabe que si $\x\in\Rn$ y $H=H(\wv, b)$ es un hiperplano en $\Rn$ entonces:
+$$d(\x, H)=\frac{|\wv^{T}\x+b|}{\|\wv\|}$$
+La fórmula anterior se puede demostrar de varias maneras. La que se presenta a continuación usa las condiciones de Karush--Kuhn--Tucker.
+\begin{proposition}
+Sean $\wv\in\Rn$, $b\in\R$ y $\xz\in\Rn$ fijos.
+\begin{itemize}
+\item[(i)] El problema
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} \|\x-\xz\| \\
+\text{s.a.}\ \
+& \x\in H(\wv, b)
+\end{aligned}
+\end{equation*}
+tiene solución única. Se define la distancia de $\xz$ a $H=H(\wv, b)$ como $d(\xz, H)= d(\xz,\xo)$.
+\item[(ii)] $d(\xz, H)=\frac{|\wv^{T}\xz+b|}{\nw}$
+\end{itemize}
+\end{proposition}
+\begin{proof}
+n
+\end{proof}
+
+Veamos si con la información que tenemos hasta el momento podemos dar una fórmula para el margen geométrico de un hiperplano respecto a un conjunto de datos.\\
+Sean $\Dat$ un conjunto de datos linealmente separable por el hiperplano $H=H(\wv, b)$ e $i\in\{1,2,\ldots,m\}$ cualquiera. Tenemos que:
+\begin{equation*}
+\begin{aligned}
+d(\x_{i}, H)&=\frac{|\wv^{T}\x_{i}+b|}{\nw} &&\text{... definición}\\
+&=\frac{|y_{i}(\wv^{T}\x_{i}+b)|}{\nw} &&\text{... $y_{i}\in\{1,-1\}$}\\
+&=\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw} &&\text{... $H$ separa a $\Dat$}
+\end{aligned}
+\end{equation*}
+Así, podemos escribir
+$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}=\text{mín}\{\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw}:\ i=\Sn\}$$
+de modo que, en lo que se refiere al cálculo del margen de $H$ respecto a $\Dat$, no hemos logrado absolutamente nada. Ambas versiones son igual de díficil de calcular. Usando la segunda versión, tenemos que calcular las $m$ cantidades $y_{i}(\wv ^{T}\x_{i}+b)$, encontrar la más pequeña de todas y después dividirla entre $\nw$. Esto sería para calcular el margen de \emph{un solo} hiperplano. Tendríamos que hacer esto para todos los posibles hiperplanos (i.e. todas las posibles elecciones de $\wv\in\Rn$ y $b\in\R$) y después hallar el que tenga el margen más grande de todos. Claramente esto es imposible.
+
+Sin embargo, resulta que hay un truco algebraico que mejora considerablemente la situación.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

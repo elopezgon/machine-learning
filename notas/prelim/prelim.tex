@@ -62,6 +62,118 @@
 \chapter{Cálculo Diferencial Multivariable}
 \chapter{Convexidad}
 \chapter{Optimización}
+Como veremos, resolver problemas de optimización  es una parte fundamental del aprendizaje de máquina. En esta sección se presentan definiciones y resultados fundamentales. Enunciamos todo en términos de problemas de minimización pues los conceptos y resultados correspondientes a problemas de maximización son totalmente análogos. Además, todo problema en términos de maximización tiene una versión equivalente en términos de minimización.
+
+\section{Optimización Irrestricta}
+Empezamos con las definiciones básicas y de carácter general pues no hay ningún tipo de suposición adicional acerca de la función en cuestión ni de su dominio.
+\begin{definition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$. Decimos que:
+\begin{itemize}
+\item[(i)] $f$ alcanza un mínimo local en $\xz$ si y solamente si $$\exists\alpha >0\ \text{tal que}\ f(\xz)\leq f(\x)\ \ \forall\x\in V_{\alpha}(\xz)\cap D$$
+\item[(ii)] $f$ alcanza un mínimo local estricto en $\xz$ si y solamente si $$\exists\alpha >0\ \text{tal que}\ f(\xz)< f(\x)\ \ \forall\x\in V_{\alpha}^{\circ}(\xz)\cap D$$
+\item[(iii)] $f$ alcanza un mínimo global en $\xz$ si y solamente si $$f(\xz)\leq f(\x)\ \ \forall\x\in D$$
+\item[(iv)] $f$ alcanza un mínimo global estricto en $\xz$ si y solamente si $$f(\xz)< f(\x)\ \ \forall\x\in D\setminus\{\xz\}$$
+\end{itemize}
+\end{definition}
+
+Como es costumbre, el cálculo diferencial aporta resultados importantes referentes a la búsqueda y clasificación de puntos óptimos. Enunciamos tres de los resultados más importantes al respecto. 
+\begin{theorem}{(Condición Necesaria de Primer Orden)}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Si $f$ alcanza un mínimo local o global en $\xz$ y $f\in C_{\{\xz\}}^{'}$ entonces $\nabla f(\xz)=\z$.
+\end{theorem}
+
+\begin{theorem}{(Condición Necesaria de Segundo Orden)}
+Sean $f:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ y $f\in C_{V_{\alpha}(\xz)}^{2}$. Si $f$ alcanza un mínimo local en $\xz$ entonces $\nabla^{2} f(\xz)\geq0$.
+\end{theorem}
+
+\begin{theorem}{(Condición Suficiente de Segundo Orden)}
+Sean $f:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ y $f\in C_{V_{\alpha}(\xz)}^{2}$. Si $\nabla f(\xz)=\z$ y $\nabla^{2} f(\xz)>0$ entonces $f$ alcanza un mínimo local estricto en $\xz$.
+\end{theorem}
+
+Hablando en general, los problemas que nos resultarán de mayor interés son de carácter global. He aquí una definición precisa.
+\begin{definition}{(Problema de Optimización Global Restricta)}\\
+Dada $f:D\subseteq\Rn\rightarrow\R$, minimizar $f(\x)$ sobre todos los $\x\in D$. Esto es, encontrar los vectores $\x \in D$ donde $f$ alcanza un mínimo global de acuerdo a la definición anterior.\\
+Se representa de la siguiente manera:
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} f(\x) \\
+\end{aligned}
+\end{equation*}
+En este contexto:
+\begin{itemize}
+\item[(i)] a $f$ se le llama \emph{función objetivo}.
+\item[(ii)] el \emph{valor óptimo} del problema  se define como:
+$$\po=\text{ínf}\{f(\x):\x\in D\}\in[-\infty, +\infty]$$
+\item[(iii)] decimos que \emph{el problema es acotado inferiormente} si y solamente si $\{f(\x):\x\in D\}\subseteq\R$ es acotado inferiormente. En dado caso se tiene $\po\in\R$.
+\item[(iv)] decimos que \emph{el problema tiene solución} si y solamente si el problema es acotado inferiormente y $\exists\xo\in\Rn$ tal que $f(\x)=\po$. Tal $\xo$ recibe el nombre de \emph{punto óptimo} o \emph{solución del problema}.
+\end{itemize}
+\end{definition}
+
+\section{Optimización Restricta}
+\begin{definition}
+Sean $f:D\subseteq\Rn\rightarrow\R$, $S\subseteq D$ y $\xz\in S$. Decimos que:
+\begin{itemize}
+\item[(i)] $f$ alcanza un mínimo local en $\xz$ sujeta a $S$ si y solamente si $$\exists\alpha >0\ \text{tal que}\ f(\xz)\leq f(\x)\ \ \forall\x\in V_{\alpha}(\xz)\cap S$$
+\item[(ii)] $f$ alcanza un mínimo local estricto en $\xz$ sujeta a $S$ si y solamente si $$\exists\alpha >0\ \text{tal que}\ f(\xz)< f(\x)\ \ \forall\x\in V_{\alpha}^{\circ}(\xz)\cap S$$
+\item[(iii)] $f$ alcanza un mínimo global en $\xz$ sujeta a $S$ si y solamente si $$f(\xz)\leq f(\x)\ \ \forall\x\in S$$
+\item[(iv)] $f$ alcanza un mínimo global estricto en $\xz$ sujeta a $S$ si y solamente si $$f(\xz)< f(\x)\ \ \forall\x\in S\setminus{\{\xz\}}$$
+\end{itemize}
+\end{definition}
+
+
+\begin{definition}{(Problema de Optimización Global Restricta)}\\
+Dada $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$, minimizar $f(\x)$ sobre todos los $\x\in D$ que satisfacen la restricción $\x\in S$. Esto es, encontrar los vectores $\x \in S$ donde $f$ alcanza un mínimo global de acuerdo a la definición anterior.\\
+Se representa de la siguiente manera:
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} f(\x) \\
+\text{s.a.}\ \
+& \x\in S
+\end{aligned}
+\end{equation*}
+\end{definition}
+
+\begin{definition}{(Tipos de Problemas)}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$. El Problema de Optimización Global Restricta se suele estar representado de las siguientes maneras:
+\begin{itemize}
+\item[(i)] Si $S=\{\x\in\R: h_{j}(\x)=0\ \ \forall j=\Sq\}$ donde $h_{j}:D\subseteq\Rn\rightarrow\R\ \ \forall j = \Sq$, escribimos
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} f(\x) \\
+\text{s.a.}\ \ & h_j(\x)=0\ \ \ j=\Sq
+\end{aligned}
+\end{equation*}
+\item[(ii)] Si $S=\{\x\in D:g_{i}(\x)\leq0, h_{j}(\x)=0\ \ \forall i=\Sp\ \ \forall j=\Sq\}$ donde $g_{i}, h_{j}:D\subseteq\Rn\rightarrow\R$ para $i=\Sp$ y $j=\Sq$, escribimos
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in D}{\text{mín}} f(\x) \\
+\text{s.a.}\ \
+& g_i(\x) \leq 0, \; i = \Sp \\
+& h_j(\x)=0, \; j=\Sq
+\end{aligned}
+\end{equation*}
+\item[(iii)] En cualquiera de las dos situaciones anteriores, diremos que:
+\begin{itemize}
+\item el problema es \emph{convexo} si solamente si $D$ es convexo, la función objetivo es convexa en $D$, todas las restricciones de desigualdad son convexas en $D$ y las restricciones de igualdad son funciones afínes en $\Rn$.
+\item el problema es \emph{diferenciable} si y solamente si $D$ es abierto y tanto la función objetivo como las funciones de restricción (igualdad y desigualdad) son diferenciables en $D$.
+\end{itemize}
+\end{itemize}
+\end{definition}
+
+\begin{theorem}{(Multiplicadores de Lagrange)}\\
+Sean $f, h_{j}:D\subseteq\Rn\rightarrow\R$ para $j=\Sq$.\\
+Consideremos $S=\{\x\in D: h_{j}(\x)=0\ \ \forall j=\Sq\}$ y $\xz\in S\cap int(D)$.\\
+Supongamos que $f, h_{j}\in C_{V_{r}(\xz)}^{1}\ \ \forall j=\Sq$ y que $f$ alcanza un mínimo local en $\xz$ sujeta a $S$.\\
+Si los vectores $\nabla h_{1}(\xz), \nabla h_{2}(\xz),\ldots,\nabla h_{q}(\xz)$ son linealmente independientes entonces existen $\lambda_{1},\lambda_{2},\ldots,\lambda_{q}\in\R$ tales que $$\nabla f(\xz)=\lambda_{1}\nabla h_{1}(\xz)+\lambda_{2}\nabla h_{2}(\xz)+\ldots+\lambda_{q}\nabla h_{q}(\xz)$$
+\end{theorem}
+
+\begin{theorem}{(Condiciones de Karush--Kuhn--Tucker)}\\
+Sean $f, g_{i}, h_{j}:D\subseteq\Rn\rightarrow\R$ para $i=\Sp$ y $j=\Sq$.\\
+Consideremos $S=\{\x\in D:g_{i}(\x)\leq0, h_{j}(\x)=0\ \ \forall i=\Sp\ \ \forall j=\Sq\}$ y $\xz\in S\cap int(D)$.\\
+Supongamos que $f,g_{i},h_{j}\in C_{V_{r}(\xz)}^{1}$ $\forall i=\Sp\ \ \forall j=\Sq$ y que $f$ alcanza un mínimo local en $\xz$ sujeta a $S$.\\
+Si los vectores $\{\nabla g_{i}(\xz)\}_{i\in\Jxz}\cup\{h_{j}(\xz)\}_{j=\Sq}$ son linealmente independientes entonces existen $\mu_{1}, \mu_{2},\dots,\mu_{p}\geq0$ y $\lambda_{1},\lambda_{2},\ldots,\lambda_{q}\in\R$ tales que $$\nabla f(\xz)+\sum_{i=1}^{p}\mu_{i}\nabla g_{i}(\xz) + \sum_{j=1}^{q}\lambda_{j}\nabla h_{j}(\xz)=\z$$
+con $\mu_{i}g_{i}(\xz)=0\ \ \forall i=\Sp$
+\end{theorem}
+
 \chapter{Dualidad de Lagrange}
 Los problemas de optimización restricta e irrestricta tienen ventajas y desventajas. En general, no es más fácil resolver uno u otro. Sin embargo, resulta que bajo ciertas condiciones hay una conexión entre ambos tipos de problemas.\\
 
