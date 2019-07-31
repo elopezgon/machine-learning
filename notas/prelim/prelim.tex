@@ -76,7 +76,7 @@ Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$. Decimos que:
 \end{itemize}
 \end{definition}
 
-Como es costumbre, el cálculo diferencial aporta resultados importantes referentes a la búsqueda y clasificación de puntos óptimos. Enunciamos tres de los resultados más importantes al respecto. 
+Como es costumbre, el cálculo diferencial aporta resultados importantes referentes a la búsqueda y clasificación de puntos óptimos. Enunciamos tres de los resultados más importantes al respecto.
 \begin{theorem}{(Condición Necesaria de Primer Orden)}
 Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Si $f$ alcanza un mínimo local o global en $\xz$ y $f\in C_{\{\xz\}}^{'}$ entonces $\nabla f(\xz)=\z$.
 \end{theorem}
@@ -90,7 +90,7 @@ Sean $f:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ y $f\in C_{V_{\alpha}(\xz)}
 \end{theorem}
 
 Hablando en general, los problemas que nos resultarán de mayor interés son de carácter global. He aquí una definición precisa.
-\begin{definition}{(Problema de Optimización Global Restricta)}\\
+\begin{definition}{(Problema de Optimización Global Irrestricta)}\\
 Dada $f:D\subseteq\Rn\rightarrow\R$, minimizar $f(\x)$ sobre todos los $\x\in D$. Esto es, encontrar los vectores $\x \in D$ donde $f$ alcanza un mínimo global de acuerdo a la definición anterior.\\
 Se representa de la siguiente manera:
 \begin{equation*}
@@ -104,11 +104,25 @@ En este contexto:
 \item[(ii)] el \emph{valor óptimo} del problema  se define como:
 $$\po=\text{ínf}\{f(\x):\x\in D\}\in[-\infty, +\infty]$$
 \item[(iii)] decimos que \emph{el problema es acotado inferiormente} si y solamente si $\{f(\x):\x\in D\}\subseteq\R$ es acotado inferiormente. En dado caso se tiene $\po\in\R$.
-\item[(iv)] decimos que \emph{el problema tiene solución} si y solamente si el problema es acotado inferiormente y $\exists\xo\in\Rn$ tal que $f(\x)=\po$. Tal $\xo$ recibe el nombre de \emph{punto óptimo} o \emph{solución del problema}.
+\item[(iv)] decimos que \emph{el problema tiene solución} si y solamente si el problema es acotado inferiormente y $\exists\xo\in D$ tal que $f(\x)=\po$. Tal $\xo$ recibe el nombre de \emph{punto óptimo} o \emph{solución del problema}.
 \end{itemize}
 \end{definition}
+Recordemos las siguientes definiciones/acuerdos. Sea $A\subseteq\R$.
+\begin{enumerate}
+\item $sup A=+\infty$ si y solamente si $A$ no es acotado superiormente.
+\item $sup A=-\infty$ si y solamente si $A=\emptyset$.
+\item $inf A=+\infty$ si y solamente si $A=\emptyset$.
+\item $inf A=-\infty$ si y solamente si $A$ no es acotado inferiormente. 
+\end{enumerate}
+
+Así, tenemos que $\po=+\infty$ si y solamente si $D=\emptyset$ lo cual no es de interés (siempre se asume $D\ne\emptyset$). También $\po=-\infty$ si y solamente si el problema no es acotado inferiormente.\\
+
+Observemos también que si $\po=-\infty$ entonces el problema no tiene solución. Al revés no es cierto. Puede suceder que el problema no tenga solución siendo $\po\in\R$ pues podría fallar la existencia del punto óptimo.
 
 \section{Optimización Restricta}
+
+En la sección anterior el vector $\x$ varía libremente en el dominio de la función $f$. En optimización restricta, la variación de $\x$ queda restringida a un subconjunto $S$ del dominio. Aunque las definiciones y terminología son muy parecidas a las del caso irrestricto, hay nuevos detalles que son importantes.
+
 \begin{definition}
 Sean $f:D\subseteq\Rn\rightarrow\R$, $S\subseteq D$ y $\xz\in S$. Decimos que:
 \begin{itemize}
@@ -119,6 +133,7 @@ Sean $f:D\subseteq\Rn\rightarrow\R$, $S\subseteq D$ y $\xz\in S$. Decimos que:
 \end{itemize}
 \end{definition}
 
+Como en el caso restricto, son de mayor interés los problemas de tipo global.
 
 \begin{definition}{(Problema de Optimización Global Restricta)}\\
 Dada $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$, minimizar $f(\x)$ sobre todos los $\x\in D$ que satisfacen la restricción $\x\in S$. Esto es, encontrar los vectores $\x \in S$ donde $f$ alcanza un mínimo global de acuerdo a la definición anterior.\\
@@ -130,7 +145,21 @@ Se representa de la siguiente manera:
 & \x\in S
 \end{aligned}
 \end{equation*}
+En este contexto:
+\begin{itemize}
+\item[(i)] a $f$ se le llama \emph{función objetivo}.
+\item[(ii)] decimos que $\x\in\Rn$ es un punto factible del problema si y solamente si $\x\in S$.
+\item[(iii)] decimos que el problema es factible si y solamente si $S\ne\emptyset$.
+\item[(iv)] el \emph{valor óptimo} del problema  se define como:
+$$\po=\text{ínf}\{f(\x):\x\in D\}\in[-\infty, +\infty]$$
+\item[(v)] decimos que \emph{el problema es acotado inferiormente} si y solamente si $\{f(\x):\x\in S\}\subseteq\R$ es acotado inferiormente. En dado caso se tiene $\po\in\R$.
+\item[(vi)] decimos que \emph{el problema tiene solución} si y solamente si el problema es acotado inferiormente y $\exists\xo\in S$ tal que $f(\x)=\po$. Tal $\xo$ recibe el nombre de \emph{punto óptimo} o \emph{solución del problema}.
+\end{itemize}
 \end{definition}
+
+Observamos que $\po=+\infty$ si y solamente si $S=\emptyset$ lo cual sucede si y solamente si el problema no es factible. También $\po=-\infty$ si y solamente si el problema no es acotado inferiormente.\\
+
+ Como en el caso irrestricto, si $\po=-\infty$ entonces el problema no tiene solución y el recíproco no es cierto en general.
 
 \begin{definition}{(Tipos de Problemas)}
 Sean $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$. El Problema de Optimización Global Restricta se suele estar representado de las siguientes maneras:
@@ -173,6 +202,8 @@ Supongamos que $f,g_{i},h_{j}\in C_{V_{r}(\xz)}^{1}$ $\forall i=\Sp\ \ \forall j
 Si los vectores $\{\nabla g_{i}(\xz)\}_{i\in\Jxz}\cup\{h_{j}(\xz)\}_{j=\Sq}$ son linealmente independientes entonces existen $\mu_{1}, \mu_{2},\dots,\mu_{p}\geq0$ y $\lambda_{1},\lambda_{2},\ldots,\lambda_{q}\in\R$ tales que $$\nabla f(\xz)+\sum_{i=1}^{p}\mu_{i}\nabla g_{i}(\xz) + \sum_{j=1}^{q}\lambda_{j}\nabla h_{j}(\xz)=\z$$
 con $\mu_{i}g_{i}(\xz)=0\ \ \forall i=\Sp$
 \end{theorem}
+
+\section*{Ejercicios}
 
 \chapter{Dualidad de Lagrange}
 Los problemas de optimización restricta e irrestricta tienen ventajas y desventajas. En general, no es más fácil resolver uno u otro. Sin embargo, resulta que bajo ciertas condiciones hay una conexión entre ambos tipos de problemas.\\
