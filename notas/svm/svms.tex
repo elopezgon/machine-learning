@@ -84,20 +84,20 @@ Al conjunto $H(\wv, b)$ se le llama \emph{hiperplano} y a los conjuntos $H^{+}(\
 \end{definition}
 
 \begin{definition}
-Sea $\Dat$ un conjunto de datos. 
+Sea $\Dat$ un conjunto de datos.
 \begin{itemize}
-\item[(i)] Decimos que el hiperplano $H=H(\wv, b)$ separa a $\Dat$ si y solamente si 
+\item[(i)] Decimos que el hiperplano $H=H(\wv, b)$ separa a $\Dat$ si y solamente si
 $$s(\wv^{T}\x_{i}+b)=y_{i}\ \ \forall i=\Sm$$
 \item[(ii)] Decimos que $\Dat$ es linealmente separable si y solamente existe al menos un hiperplano que separa a $\Dat$.
 \end{itemize}
 \end{definition}
 \section{El Algoritmo del Perceptrón}
-\section{Máquinas de vectores de soporte. Caso Linealmente separable.}
+\section{Máquinas de Vectores de Soporte. Caso Linealmente Separable.}
 
-Definiremos el margen de un hiperplano respecto a un conjunto de datos. 
+Definiremos el margen de un hiperplano respecto a un conjunto de datos.
 \begin{definition}
 Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano. Definimos el margen de $H$ respecto a $\Dat$ como
-$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}$$ 
+$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}$$
 \end{definition}
 Hasta este punto, podemos enunciar el problema de encontrar un hiperplano óptimo de la siguiente manera:
 \begin{center}
@@ -113,11 +113,11 @@ Iremos transformando este problema poco a poco hasta tenerlo en una forma matem�
 Empezamos con una definición de separabilidad un poco más manejable.
 \begin{proposition}
 Sea $\Dat$ un conjunto de datos. El hiperplano $H$ dado por $(\wv, b)$ separa a $\Dat$ si y solamente si
-$$y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sn$$
+$$y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sm$$
 \end{proposition}
 \begin{proof}
 Supongamos que el hiperplano $H$ dado por $(\wv, b)$ separa a $\Dat$ i.e. $s(\wv^{T}\x_{i}+b)=y_i\ \ \forall i\in\Sm$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Como $h(\x_{i})= y_{i}$ tenemos que si $y_{i}=1$, entonces $\wv^{T}\x_{i}+b>0$ de modo que $y_{i}(\wv^{T}\x_{i}+b)>0$. De manera similar, si $y_{i}=-1$, entonces $\wv^{T}\x_{i}+b<0$ de modo que $y_{i}(\wv^{T}\x_{i}+b)<0$.\\
-Supongamos ahora que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sn$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Sabemos que $y_{i}(\wv ^{T}\x_{i}+b)>0$. Si $y_{i}=1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b>0$ de modo que $s(\wv ^{T}\x_{i}+b)=1=y_{i}$. Si $y_{i}=-1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b<0$ de modo que $s(\wv ^{T}\x_{i}+b)=-1=y_{i}$.
+Supongamos ahora que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sm$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Sabemos que $y_{i}(\wv ^{T}\x_{i}+b)>0$. Si $y_{i}=1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b>0$ de modo que $s(\wv ^{T}\x_{i}+b)=1=y_{i}$. Si $y_{i}=-1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b<0$ de modo que $s(\wv ^{T}\x_{i}+b)=-1=y_{i}$.
 \end{proof}
 
 Esta proposición nos dice que la separabilidad está codificada a través de las cantidades $y_{i}(\wv ^{T}\x_{i}+b)$.
@@ -154,10 +154,83 @@ d(\x_{i}, H)&=\frac{|\wv^{T}\x_{i}+b|}{\nw} &&\text{... definición}\\
 \end{aligned}
 \end{equation*}
 Así, podemos escribir
-$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}=\text{mín}\{\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw}:\ i=\Sn\}$$
-de modo que, en lo que se refiere al cálculo del margen de $H$ respecto a $\Dat$, no hemos logrado absolutamente nada. Ambas versiones son igual de díficil de calcular. Usando la segunda versión, tenemos que calcular las $m$ cantidades $y_{i}(\wv ^{T}\x_{i}+b)$, encontrar la más pequeña de todas y después dividirla entre $\nw$. Esto sería para calcular el margen de \emph{un solo} hiperplano. Tendríamos que hacer esto para todos los posibles hiperplanos (i.e. todas las posibles elecciones de $\wv\in\Rn$ y $b\in\R$) y después hallar el que tenga el margen más grande de todos. Claramente esto es imposible.
+$$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sm\}=\text{mín}\left\{\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw}:\ i=\Sm\right\}$$
+de modo que, en lo que se refiere al cálculo del margen de $H$ respecto a $\Dat$, no hemos logrado absolutamente nada. Ambas versiones son igual de díficil de calcular. Usando la segunda versión, tenemos que calcular las $m$ cantidades $y_{i}(\wv ^{T}\x_{i}+b)$, encontrar la más pequeña de todas y después dividirla entre $\nw$. Esto sería para calcular el margen de \emph{un solo} hiperplano. Tendríamos que hacer esto para todos los posibles hiperplanos (i.e. todas las posibles elecciones de $\wv\in\Rn$ y $b\in\R$) y después hallar el que tenga el margen más grande de todos. Claramente esto es imposible.\\
 
-Sin embargo, resulta que hay un truco algebraico que mejora considerablemente la situación.
+Afortunadamente, resulta que hay un truco algebraico que mejora considerablemente la situación. Empecemos por observar que si $H=H(\wv, b)$ es un hiperplano y $k\in\R\setminus\{0\}$ es cualquier constante diferente de cero, entonces $H=H(k\wv,k b)$. Es decir, un hiperplano se puede representar de una infinidad de maneras diferentes multiplicando sus parámetros por un escalar.
+
+\begin{proposition}
+Sean $\wv\in\Rn$ y $b, k\in\R$.
+\begin{itemize}
+\item[(i)] Si $k\ne0$ entonces $H(\wv, b)=H(k\wv, kb)$.
+\item[(ii)] Si $k>0$ y $H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, kb)$ también separa a $\Dat$.
+\end{itemize}
+\end{proposition}
+
+
+Es importante recalcar que si $H=H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, kb)$ puede o no seguir separando a $\Dat$. Si $k>0$, demostramos que la nueva representación de $H$ sigue separando a $\Dat$. Si $k<0$, ya no sería el caso. Como objeto geométrico, $H$ seguiría separando ``físicamente'' a los puntos de $\Dat$ pero $k\wv$ apunta en dirección contraria a $\wv$ de modo que la clasificación de los puntos quedaría invertida. (ejercicio)\\
+
+La siguiente cadena de proposiciones nos muestra que si $H$ es un hiperplano que separa a $\Dat$, entonces existe una representación especial de $\Dat$ que sigue separando a $\Dat$ y para la cual el margen es muy fácil de calcular.
+
+\begin{proposition}
+Sean $\Dat$ un conjunto de datos y $H=H(\wv,b)$ un hiperplano. Entonces $\exists r\in\R$, $r>0$, tal que:
+\begin{itemize}
+\item[(i)] $H=H(r\wv, rb)$ separa a $\Dat$.
+\item[(ii)] $\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb){\nw}:\ i=\Sm \}=1$
+\end{itemize}
+\end{proposition}
+\begin{proof}
+Como $H(\wv, b)$ separa a $\Dat$, tenemos que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sm$ y entonces $a=\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ \ i=\Sm \}>0$. Proponemos $r=a^{-1}$. Efectivamente, por la proposición anterior $H=H(r\wv, rb)$ separa a $\Dat$ pues $r>0$. Esto implica que $y_{i}(r\wv^{T}\x_{i}+rb)>0\ \ \forall i=\Sm $. Ahora,
+\begin{equation*}
+\begin{aligned}
+\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb){\nw}:\ i=\Sm \}&=\text{mín}\{ry_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}\\
+&=r\ \text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}\\
+&=a^{-1}a\\
+&=1
+\end{aligned}
+\end{equation*}
+\end{proof}
+
+La siguiente es una especie de recíproco de la anterior.
+
+\begin{proposition}
+Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano tal que $\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}=1$. Entonces $H=H(\wv, b)$ separa a $\Dat$
+\end{proposition}
+\begin{proof}
+Simplemente notamos que $y_{i}(r\wv^{T}\x_{i}+rb)\geq1>0\ \ \forall i=\Sm$.
+\end{proof}
+ 
+Combinando las dos proposiciones anteriores tenemos la siguiente que es fundamental.
+ 
+\begin{proposition}
+Sean $\Dat$ un conjunto de datos y $H$ un hiperplano. Entonces, $H$ separa a $\Dat$ si y solamente si existe una representación de $H=H(\wv, b)$ tal que
+$$\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}=1$$
+Si $H$ separa a $\Dat$, a la representación de $H$ con la virtud anterior se le llamará \emph{representación canónica de $H$ respecto a $\Dat$}.
+\end{proposition}
+
+Finalmente, una manera fácil de expresar el margen de un hiperplano.
+
+\begin{proposition}
+Sean $\Dat$ un conjunto de datos y $H$ un hiperplano que separa $\Dat$. Sea $H=H(\wv, b)$ la representación canónica de $H$ respecto a $\Dat$. Entonces:
+$$\gamma_{\Dat}(\wv, b)=\frac{1}{\nw}$$
+\end{proposition}
+\begin{proof}
+Notemos que
+\begin{equation*}
+\begin{aligned}
+\gamma_{\Dat}(\wv, b)&=\text{mín}\{d(\x_{i}, H):\ i=\Sm\} &&\text{... definición}\\
+&=\text{mín}\left\{\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw}:\ i=\Sm\right\} &&\text{... fórmula de la distancia}\\
+&=\frac{1}{\nw}\text{mín}\{\frac{y_{i}(\wv^{T}\x_{i}+b)}:\ i=\Sm\} &&\text{... $\frac{1}{\nw}>0$}\\
+&=\frac{1}{\nw}\cdot 1 &&\text{... $H$ está en representación canónica}\\
+&=\frac{1}{\nw}
+\end{aligned}
+\end{equation*}
+\end{proof}
+
+Así, cuando el hiperplano separa y está en representación canónica, el margen tiene una expresión muy simple.
+
+ 
+
 
 
 
