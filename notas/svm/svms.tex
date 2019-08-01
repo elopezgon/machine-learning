@@ -12,10 +12,11 @@
 
 \setlength{\parindent}{0pt}
 
-\newcommand{\Rn}{\mathbb{R}^{n}}
-\newcommand{\Rp}{\mathbb{R}^{p}}
-\newcommand{\Rq}{\mathbb{R}^{q}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\Rn}{\R^{n}}
+\newcommand{\Rp}{\R^{p}}
+\newcommand{\Rq}{\R^{q}}
+\newcommand{\Rnu}{\R\times\Rn}
 
 \newcommand{\mv}{\overline{\mu}}
 \newcommand{\lv}{\overline{\lambda}}
@@ -26,6 +27,7 @@
 \newcommand{\xz}{\overline{x}_{0}}
 \newcommand{\y}{\overline{y}}
 \newcommand{\z}{\overline{0}_{n}}
+\newcommand{\Rnz}{\Rn\setminus\{\z\}}
 \newcommand{\zp}{\overline{0}_{p}}
 \newcommand{\Jxz}{J(\overline{x}_{0})}
 
@@ -40,11 +42,17 @@
 \newcommand{\xd}{(X,d)}
 
 \newcommand{\po}{p_{*}}
+\newcommand{\eo}{e^{*}}
 \newcommand{\xo}{\overline{x}_{*}}
 \newcommand{\deo}{d^{*}}
 \newcommand{\muo}{\overline{\mu}^{*}}
 \newcommand{\lao}{\overline{\lambda}^{*}}
 \newcommand{\mlo}{(\overline{\mu}^{*},\overline{\lambda}^{*})}
+
+\newcommand{\bo}{b^{*}}
+\newcommand{\bc}{b^{'}}
+\newcommand{\wo}{\wv^{*}}
+\newcommand{\wc}{\wv^{'}}
 
 \newcommand{\xc}{\widetilde{x}}
 \newcommand{\muc}{\widetilde{\mu}}
@@ -52,6 +60,9 @@
 
 \newcommand{\Dat}{\mathbb{D}}
 \newcommand{\nw}{\|\wv\|}
+
+\newcommand{\SE}{S_{(E)}}
+\newcommand{\SP}{S_{(P)}}
 
 \addtolength{\oddsidemargin}{-.875in}
 	\addtolength{\evensidemargin}{-.875in}
@@ -61,7 +72,7 @@
 	\addtolength{\textheight}{1.75in}
 
 \begin{document}
-\title{Máquinas de vectores de soporte}
+\title{Máquinas de Vectores de Soporte}
 \section{El Problema de Clasificación}
 
 
@@ -101,7 +112,7 @@ $$\gamma_{\Dat}(H)=\gamma_{\Dat}(\wv, b)=\text{mín}\{d(\x_{i}, H):\ i=\Sn\}$$
 \end{definition}
 Hasta este punto, podemos enunciar el problema de encontrar un hiperplano óptimo de la siguiente manera:
 \begin{center}
-Encontrar $\wv\in\Rn$ y $b\in\Rn$ tales que:\\
+Encontrar $\wv\in\Rn$ y $b\in\R$ tales que:\\
 \begin{itemize}
 \item $\gamma_{\Dat}(\wv, b)$ es lo más grande posible
 \item $H(\wv, b)$ separa a $\Dat$\\
@@ -120,13 +131,19 @@ Supongamos que el hiperplano $H$ dado por $(\wv, b)$ separa a $\Dat$ i.e. $s(\wv
 Supongamos ahora que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sm$. Sea $i\in{1,2,\ldots,m}$ cualquiera. Sabemos que $y_{i}(\wv ^{T}\x_{i}+b)>0$. Si $y_{i}=1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b>0$ de modo que $s(\wv ^{T}\x_{i}+b)=1=y_{i}$. Si $y_{i}=-1$ entonces, por las leyes de los signos, $\wv ^{T}\x_{i}+b<0$ de modo que $s(\wv ^{T}\x_{i}+b)=-1=y_{i}$.
 \end{proof}
 
-Esta proposición nos dice que la separabilidad está codificada a través de las cantidades $y_{i}(\wv ^{T}\x_{i}+b)$.
+Esta proposición nos dice que la separabilidad está codificada a través de las cantidades $y_{i}(\wv ^{T}\x_{i}+b)$. Tenemos una consecuencia fácil de esto.
+
+\begin{observation}
+Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano que separa a $\Dat$. Si $\Dat$ tiene al menos un punto con etiqueta $+1$ y al menos un punto con etiqueta $-1$, entonces $\wv\ne\z$.
+\end{observation}
+
+Siempre asumiremos que $\Dat$ tiene al menos un punto de cada clase pues de otro modo no estaríamos hablando de clasificación binaria. Por lo tanto una hipótesis que siempre estará presente es $\wv\in\Rnz$.\\
 
 Pensemos ahora en el asunto de las distancias. ¿Cómo se calcula distancia de un punto a un hiperplano? Se sabe que si $\x\in\Rn$ y $H=H(\wv, b)$ es un hiperplano en $\Rn$ entonces:
 $$d(\x, H)=\frac{|\wv^{T}\x+b|}{\|\wv\|}$$
 La fórmula anterior se puede demostrar de varias maneras. La que se presenta a continuación usa las condiciones de Karush--Kuhn--Tucker.
 \begin{proposition}
-Sean $\wv\in\Rn$, $b\in\R$ y $\xz\in\Rn$ fijos.
+Sean $\wv\in\Rnz$, $b\in\R$ y $\xz\in\Rn$ fijos.
 \begin{itemize}
 \item[(i)] El problema
 \begin{equation*}
@@ -160,7 +177,7 @@ de modo que, en lo que se refiere al cálculo del margen de $H$ respecto a $\Dat
 Afortunadamente, resulta que hay un truco algebraico que mejora considerablemente la situación. Empecemos por observar que si $H=H(\wv, b)$ es un hiperplano y $k\in\R\setminus\{0\}$ es cualquier constante diferente de cero, entonces $H=H(k\wv,k b)$. Es decir, un hiperplano se puede representar de una infinidad de maneras diferentes multiplicando sus parámetros por un escalar.
 
 \begin{proposition}
-Sean $\wv\in\Rn$ y $b, k\in\R$.
+Sean $\wv\in\Rnz$ y $b, k\in\R$.
 \begin{itemize}
 \item[(i)] Si $k\ne0$ entonces $H(\wv, b)=H(k\wv, kb)$.
 \item[(ii)] Si $k>0$ y $H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, kb)$ también separa a $\Dat$.
@@ -173,18 +190,18 @@ Es importante recalcar que si $H=H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, k
 La siguiente cadena de proposiciones nos muestra que si $H$ es un hiperplano que separa a $\Dat$, entonces existe una representación especial de $\Dat$ que sigue separando a $\Dat$ y para la cual el margen es muy fácil de calcular.
 
 \begin{proposition}
-Sean $\Dat$ un conjunto de datos y $H=H(\wv,b)$ un hiperplano. Entonces $\exists r\in\R$, $r>0$, tal que:
+Sean $\Dat$ un conjunto de datos y $H=H(\wv,b)$ un hiperplano que separa a $\Dat$. Entonces $\exists r\in\R$, $r>0$, tal que:
 \begin{itemize}
 \item[(i)] $H=H(r\wv, rb)$ separa a $\Dat$.
-\item[(ii)] $\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb){\nw}:\ i=\Sm \}=1$
+\item[(ii)] $\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}=1$
 \end{itemize}
 \end{proposition}
 \begin{proof}
 Como $H(\wv, b)$ separa a $\Dat$, tenemos que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \forall i=\Sm$ y entonces $a=\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ \ i=\Sm \}>0$. Proponemos $r=a^{-1}$. Efectivamente, por la proposición anterior $H=H(r\wv, rb)$ separa a $\Dat$ pues $r>0$. Esto implica que $y_{i}(r\wv^{T}\x_{i}+rb)>0\ \ \forall i=\Sm $. Ahora,
 \begin{equation*}
 \begin{aligned}
-\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb){\nw}:\ i=\Sm \}&=\text{mín}\{ry_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}\\
-&=r\ \text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}\\
+\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}&=\text{mín}\{ry_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}\\
+&=r\ \text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}\\
 &=a^{-1}a\\
 &=1
 \end{aligned}
@@ -194,14 +211,14 @@ Como $H(\wv, b)$ separa a $\Dat$, tenemos que $y_{i}(\wv ^{T}\x_{i}+b)>0\ \ \for
 La siguiente es una especie de recíproco de la anterior.
 
 \begin{proposition}
-Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano tal que $\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}=1$. Entonces $H=H(\wv, b)$ separa a $\Dat$
+Sean $\Dat$ un conjunto de datos y $H=H(\wv, b)$ un hiperplano tal que $\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}=1$. Entonces $H=H(\wv, b)$ separa a $\Dat$
 \end{proposition}
 \begin{proof}
-Simplemente notamos que $y_{i}(r\wv^{T}\x_{i}+rb)\geq1>0\ \ \forall i=\Sm$.
+Simplemente notamos que $y_{i}(\wv^{T}\x_{i}+b)\geq1>0\ \ \forall i=\Sm$.
 \end{proof}
- 
+
 Combinando las dos proposiciones anteriores tenemos la siguiente que es fundamental.
- 
+
 \begin{proposition}
 Sean $\Dat$ un conjunto de datos y $H$ un hiperplano. Entonces, $H$ separa a $\Dat$ si y solamente si existe una representación de $H=H(\wv, b)$ tal que
 $$\text{mín}\{y_{i}(r\wv^{T}\x_{i}+rb):\ i=\Sm \}=1$$
@@ -220,37 +237,88 @@ Notemos que
 \begin{aligned}
 \gamma_{\Dat}(\wv, b)&=\text{mín}\{d(\x_{i}, H):\ i=\Sm\} &&\text{... definición}\\
 &=\text{mín}\left\{\frac{y_{i}(\wv^{T}\x_{i}+b)}{\nw}:\ i=\Sm\right\} &&\text{... fórmula de la distancia}\\
-&=\frac{1}{\nw}\text{mín}\{\frac{y_{i}(\wv^{T}\x_{i}+b)}:\ i=\Sm\} &&\text{... $\frac{1}{\nw}>0$}\\
+&=\frac{1}{\nw}\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm\} &&\text{... $\frac{1}{\nw}>0$}\\
 &=\frac{1}{\nw}\cdot 1 &&\text{... $H$ está en representación canónica}\\
 &=\frac{1}{\nw}
 \end{aligned}
 \end{equation*}
 \end{proof}
 
-Así, cuando el hiperplano separa y está en representación canónica, el margen tiene una expresión muy simple.
+Así, cuando el hiperplano separa y está en representación canónica, el margen tiene una expresión muy simple. Podríamos volver a pensar que no hemos avanzado pues calcular la representación canónica de un hiperplano puede ser laborioso si $\Dat$ es grande. Sin embargo, veremos ahora que esto nos tiene sin cuidado.\\
 
- 
+Sea $\Dat$ un conjunto de datos linealmente separable. Recordemos que para encontrar el hiperplano óptimo requerimos
+\begin{center}
+Encontrar $\wv\in\Rnz$ y $b\in\R$ tales que:\\
+\begin{itemize}
+\item $\gamma_{\Dat}(\wv, b)$ es lo más grande posible
+\item $H(\wv, b)$ separa a $\Dat$\\
+\end{itemize}
+\end{center}
 
+Con lo que tenemos hasta ahora, podemos reescribir y generar el siguiente problema equivalente:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b,\wv)\in C}{\text{máx}} \frac{1}{\nw} \\
+\text{s.a.}\ \
+& \text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}=1
+\end{aligned}
+\end{equation*}
+donde $C=\{(b,\wv)\in\Rnu: \wv\ne\z\}$. Notemos que las restricciones del problema obligan a generar un hiperplano separador  representado de manera canónica. Así, la función objetivo $f(b, \wv)=(\nw)^{-1}$ es el margen de dicho hiperplano respecto a $\Dat$ según la proposición anterior.\\
 
+El problema de optimización restricta anterior captura justamente lo queremos hacer: encontrar el hiperplano separador con mayor margen posible. Así escrito es dífícil de trabajar por la naturaleza de la función objetivo y de la restricción. Lo transformaremos en un problema equivalente fácil de trabajar.\\
 
+Empecemos por la función objetivo. Podemos observar que maximizar la cantidad $(\nw)^{-1}$ es equivalente a minimizar $\nw$ que a su vez es equivalente a minimizar $\nw^{2}=\wv^{T}\wv$. Esto último es equivalente a minimizar $f(b, \wv)=\frac{1}{2}\wv^{T}\wv$. Vamos bien, esta nueva función objetivo es convexa (ejercicio, ¿por qué no es estrictamente convexa?).\\
 
+Veamos que podemos hacer respecto a las restricción. Hasta ahora tenemos el problema $(E)$:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b,\wv)\in C}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
+\text{s.a.}\ \
+& \text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}=1
+\end{aligned}
+\end{equation*}
+Podríamos tratar de hacer algo como el siguiente problema $(P)$:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b,\wv)\in C}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
+\text{s.a.}\ \
+& y_{i}(\wv^{T}\x_{i}+b)\geq1\ \ \forall i=\Sm
+\end{aligned}
+\end{equation*}
 
+Aunque el problema $(P)$ tiene $m$ restricciones y $(E)$ solo tiene una, las restricciones de $(P)$ son mucho más fáciles de trabajar pues son afínes. Ahora, es claro que todo punto factible de $(E)$ también es punto factible de $(P)$. En principio, no hay ninguna razón que obligue a que lo recíproco sea cierto. Afortunadamente tenemos el siguiente resultado.
 
+\begin{proposition}
+Toda solución del problema $(P)$ también es solución del problema $(E)$
+\end{proposition}
+\begin{proof}
+En ambos problemas la función objetivo es $f:C\subseteq\Rnu\rightarrow\R$ dada por $f(b, \wv)=\frac{1}{2}\wv^{T}\wv$ y donde $C=\{(b,\wv)\in\Rnu: \wv\ne\z\}$. Sean $\SE$ y $\SP$ los subconjuntos de $C$ generados por las restricciones de $(E)$ y $(P)$ respectivamente. Notamos que $\SE\subseteq\SP$.\\
+Sea $(\bc,\wc)$ un punto óptimo de $(P)$, i.e., $f(\bc, \wc)\leq f(b, \wv)\ \ \forall(b, \wv)\in\SP$.\\
+empecemos argumentando que $(\bc, \wc)\in\SE$. Si no fuése el caso, querría decir que
+$$k=\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}>1$$
+Definimos $\wo=k^{-1}\wc$, $\bo=k^{-1}\bc$. Notemos que $0<k^{-1}<1$. Además
+\begin{equation*}
+\begin{aligned}
+\text{mín}\{y_{i}({\wo}^{T}\x_{i}+\bo):\ i=\Sm \}&=\text{mín}\{y_{i}(k^{-1}{\wc}^{T}\x_{i}+k^{-1}{\bc}):\ i=\Sm \}\\
+&=k^{-1}\ \text{mín}\{y_{i}({\wc}^{T}\x_{i}+{\bc}):\ i=\Sm \}\\
+&=k^{-1}k\\
+&=1
+\end{aligned}
+\end{equation*}
+lo cual implica que $(\bo, \wo)\in\SP$. Pero $\|\wo \|=k^{-1}\nw<\nw$ de modo que $f(\bo, \wo)<f(\bc, \wc)$ lo cual contradice que $(\bc,\wc)$ un punto óptimo de $(P)$.\\
+Ya tenemos que $(\bc,\wc)\in\SE$. Como $\SE\subseteq\SP$, se sigue que $f(\bc, \wc)\leq f(b, \wv)\ \ \forall(b, \wv)\in\SE$. Por lo tanto, $(\bc,\wc)$ es un punto óptimo de $(E)$ como se quería.
+\end{proof}
+Así las cosas, podemos concentrarnos en resolver el problema de optimización restricta $(P)$ del cual podemos observar lo siguiente:
+\begin{itemize}
+\item La suposición de que $\Dat$ es linealmente separable implica que el problema es factible.
+\item Es un problema convexo.
+\item Es un problema de programación cuadrática (¿por qué?).
+\end{itemize}
+Este modelo de aprendizaje de máquina recibe el nombre de ``máquina de vectores de soporte con margen fuerte''.\\
 
+Dado que hay software especializado para resolver problemas de programación cuadrática, podríamos dar por finalizada la discusión. Sin embargo, todavía hay cosas que decir acerca del problema $(P)$. Aplicando la Teoría de Dualidad de Lagrange, podremos comprender más profundamente lo que acabamos de hacer y descubriremos nuevas técnicas en el proceso.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\section{El problema dual}
 
 
 
