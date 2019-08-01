@@ -61,6 +61,61 @@
 \begin{document}
 \chapter{Cálculo Diferencial Multivariable}
 \chapter{Convexidad}
+\begin{definition}
+Sean $\x,\y\in\Rn$. Definimos el segmento que une a $\x$ con $\y$ como
+$$[\x;\y] = \{\lambda\y + (1-\lambda)\x: \lambda\in [0,1]\}$$
+\end{definition}
+
+\begin{definition}
+Sea $A\subseteq \mathbb{R}^{n}$. Decimos que $A$ es convexo si y solamente si $\forall\overline{x}, \overline{y}\in A$ se tiene que $[\overline{x}; \overline{y}]\subseteq A$.
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$. Decimos que $f$ es convexa en $D$ si y solamente si
+\begin{itemize}
+\item[(i)] $D$ es convexo
+\item[(ii)] $\forall\x,\y\in D\ \ \forall\lambda\in [0, 1]$ se tiene que: $$f(\lambda\y+(1-\lambda)\x)\leq\lambda f(\y)+(1-\lambda)f(\x)$$
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$. Decimos que $f$ es estrictamente convexa en $D$ si y solamente si
+\begin{itemize}
+\item[(i)] $D$ es convexo
+\item[(ii)] $\forall\x,\y\in D$ con $\x\ne\y$, $\forall\lambda\in (0, 1)$ se tiene que: $$f(\lambda\y+(1-\lambda)\x)<\lambda f(\y)+(1-\lambda)f(\x)$$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}
+Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto y convexo. Supongamos que $f$ es diferenciable en $D$. Son equivalentes:
+\begin{itemize}
+\item[(i)] $f$ es convexa en $D$
+\item[(ii)] $\forall\x,\y\in D$ se tiene que: $$f(\y)\geq f(\x)+\nabla f(\x)^{T}(\y - \x)$$
+\item[(iii)] $\forall\x,\y\in D$ se tiene que: $$[\nabla f(\x)-\nabla f(\y)]^{T}(\x-\y)\geq0$$
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto y convexo. Supongamos que $f\in C_{D}^{2}$. Son equivalentes:
+\begin{itemize}
+\item[(i)] $f$ es convexa en $D$
+\item[(ii)] $\nabla^{2}f(\x)\geq0\ \ \forall\x\in D$
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto y convexo. Supongamos que $f$ es diferenciable en $D$. Son equivalentes:
+\begin{itemize}
+\item[(i)] $f$ es estrictamente convexa en $D$
+\item[(ii)] $\forall\x,\y\in D$ con $\x\ne\y$, se tiene que: $$f(\y)> f(\x)+\nabla f(\x)^{T}(\y - \x)$$
+\item[(iii)] $\forall\x,\y\in D$ con $\x\ne\y$, se tiene que: $$[\nabla f(\x)-\nabla f(\y)]^{T}(\x-\y)>0$$
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto y convexo. Supongamos que $f\in C_{D}^{2}$.
+Si $\nabla^{2}f(\x)>0\ \ \forall\x\in D$, entonces $f$ es estrictamente convexa en $D$.
+\end{theorem}
 \chapter{Optimización}
 Como veremos, resolver problemas de optimización  es una parte fundamental del aprendizaje de máquina. En esta sección se presentan definiciones y resultados fundamentales. Enunciamos todo en términos de problemas de minimización pues los conceptos y resultados correspondientes a problemas de maximización son totalmente análogos. Además, todo problema en términos de maximización tiene una versión equivalente en términos de minimización.
 
@@ -164,7 +219,7 @@ Observamos que $\po=+\infty$ si y solamente si $S=\emptyset$ lo cual sucede si y
 \begin{definition}{(Tipos de Problemas)}
 Sean $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$. El Problema de Optimización Global Restricta se suele estar representado de las siguientes maneras:
 \begin{itemize}
-\item[(i)] Si $S=\{\x\in\D: h_{j}(\x)=0\ \ \forall j=\Sq\}$ donde $h_{j}:D\subseteq\Rn\rightarrow\R\ \ \forall j = \Sq$, escribimos
+\item[(i)] Si $S=\{\x\in D: h_{j}(\x)=0\ \ \forall j=\Sq\}$ donde $h_{j}:D\subseteq\Rn\rightarrow\R\ \ \forall j = \Sq$, escribimos
 \begin{equation*}
 \begin{aligned}
 & \underset{\x\in D}{\text{mín}} f(\x) \\
