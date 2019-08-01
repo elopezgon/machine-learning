@@ -112,7 +112,7 @@ Recordemos las siguientes definiciones/acuerdos. Sea $A\subseteq\R$.
 \item $sup A=+\infty$ si y solamente si $A$ no es acotado superiormente.
 \item $sup A=-\infty$ si y solamente si $A=\emptyset$.
 \item $inf A=+\infty$ si y solamente si $A=\emptyset$.
-\item $inf A=-\infty$ si y solamente si $A$ no es acotado inferiormente. 
+\item $inf A=-\infty$ si y solamente si $A$ no es acotado inferiormente.
 \end{enumerate}
 
 Así, tenemos que $\po=+\infty$ si y solamente si $D=\emptyset$ lo cual no es de interés (siempre se asume $D\ne\emptyset$). También $\po=-\infty$ si y solamente si el problema no es acotado inferiormente.\\
@@ -151,7 +151,7 @@ En este contexto:
 \item[(ii)] decimos que $\x\in\Rn$ es un punto factible del problema si y solamente si $\x\in S$.
 \item[(iii)] decimos que el problema es factible si y solamente si $S\ne\emptyset$.
 \item[(iv)] el \emph{valor óptimo} del problema  se define como:
-$$\po=\text{ínf}\{f(\x):\x\in D\}\in[-\infty, +\infty]$$
+$$\po=\text{ínf}\{f(\x):\x\in S\}\in[-\infty, +\infty]$$
 \item[(v)] decimos que \emph{el problema es acotado inferiormente} si y solamente si $\{f(\x):\x\in S\}\subseteq\R$ es acotado inferiormente. En dado caso se tiene $\po\in\R$.
 \item[(vi)] decimos que \emph{el problema tiene solución} si y solamente si el problema es acotado inferiormente y $\exists\xo\in S$ tal que $f(\x)=\po$. Tal $\xo$ recibe el nombre de \emph{punto óptimo} o \emph{solución del problema}.
 \end{itemize}
@@ -164,7 +164,7 @@ Observamos que $\po=+\infty$ si y solamente si $S=\emptyset$ lo cual sucede si y
 \begin{definition}{(Tipos de Problemas)}
 Sean $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$. El Problema de Optimización Global Restricta se suele estar representado de las siguientes maneras:
 \begin{itemize}
-\item[(i)] Si $S=\{\x\in\R: h_{j}(\x)=0\ \ \forall j=\Sq\}$ donde $h_{j}:D\subseteq\Rn\rightarrow\R\ \ \forall j = \Sq$, escribimos
+\item[(i)] Si $S=\{\x\in\D: h_{j}(\x)=0\ \ \forall j=\Sq\}$ donde $h_{j}:D\subseteq\Rn\rightarrow\R\ \ \forall j = \Sq$, escribimos
 \begin{equation*}
 \begin{aligned}
 & \underset{\x\in D}{\text{mín}} f(\x) \\
@@ -371,13 +371,13 @@ Entonces $\xc$ y $(\muc,\lac)$ son puntos óptimos de $(P)$ y $(D)$ respectivame
 \end{theorem}
 \begin{proof}
 La condición $(i)$ garantiza que $\xc\in S\subseteq D$ i.e. $\xc$ es un punto factible de $(P)$.\\
-Sea $k=\La(\x,\muc, \lac):D\subseteq\Rn\rightarrow\R$. Por la condición $(ii)$, $k$ es convexa en $D$. Las hipótesis garantizan que $k$ es diferenciable en $D$ y la condición $(iv)$ implica que $\nabla k(\xc)=\z$. Por lo tanto, $k$ alcanza un mínimo global en $\xc$. Así las cosas:
+Sea $k=\La(\ \cdot\ ,\muc, \lac):D\subseteq\Rn\rightarrow\R$. Por la condición $(ii)$, $k$ es convexa en $D$. Las hipótesis garantizan que $k$ es diferenciable en $D$ y la condición $(iv)$ implica que $\nabla k(\xc)=\z$. Por lo tanto, $k$ alcanza un mínimo global en $\xc$. Así las cosas:
 \begin{equation*}
 \begin{aligned}
 f(\xc)&=f(\xc)+\sum_{i=1}^{p}\muc_{i} g_{i}(\xc) + \sum_{j=1}^{q}\lac_{j} h_{j}(\xc) &&\text{... condiciones (i) y (iii)}\\
 &=k(\xc) &&\text{... definición}\\
 &= \underset{\x\in D}{\text{ínf}} k(\x) &&\text{... $k$ alcanza un mínimo global en $\xc$} \\
-&= \underset{\x\in D}{\text{ínf}}\La(\x,\mv,\lv) &&\text{... definición}\\
+&= \underset{\x\in D}{\text{ínf}}\La(\x,\muc,\lac) &&\text{... definición}\\
 &=g(\muc,\lac) &&\text{... definición}
 \end{aligned}
 \end{equation*}
