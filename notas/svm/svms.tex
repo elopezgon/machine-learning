@@ -14,6 +14,7 @@
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rn}{\R^{n}}
+\newcommand{\Rm}{\R^{m}}
 \newcommand{\Rp}{\R^{p}}
 \newcommand{\Rq}{\R^{q}}
 \newcommand{\Rnu}{\R\times\Rn}
@@ -21,6 +22,7 @@
 \newcommand{\mv}{\overline{\mu}}
 \newcommand{\lv}{\overline{\lambda}}
 \newcommand{\thv}{\overline{\theta}}
+\newcommand{\av}{\overline{\alpha}}
 \newcommand{\wv}{\overline{w}}
 \newcommand{\bv}{\overline{b}}
 \newcommand{\x}{\overline{x}}
@@ -29,6 +31,8 @@
 \newcommand{\z}{\overline{0}_{n}}
 \newcommand{\Rnz}{\Rn\setminus\{\z\}}
 \newcommand{\zp}{\overline{0}_{p}}
+\newcommand{\zm}{\overline{0}_{m}}
+\newcommand{\znu}{\overline{0}_{n+1}}
 \newcommand{\Jxz}{J(\overline{x}_{0})}
 
 \newcommand{\Sp}{1,2,\ldots, p}
@@ -49,10 +53,13 @@
 \newcommand{\lao}{\overline{\lambda}^{*}}
 \newcommand{\mlo}{(\overline{\mu}^{*},\overline{\lambda}^{*})}
 
-\newcommand{\bo}{b^{*}}
+\newcommand{\bo}{b_{*}}
 \newcommand{\bc}{b^{'}}
-\newcommand{\wo}{\wv^{*}}
+\newcommand{\wo}{\wv_{*}}
 \newcommand{\wc}{\wv^{'}}
+\newcommand{\avo}{\av^{*}}
+\newcommand{\alio}{\alpha_{i}^{*}}
+\newcommand{\aljo}{\alpha_{j}^{*}}
 
 \newcommand{\xc}{\widetilde{x}}
 \newcommand{\muc}{\widetilde{\mu}}
@@ -64,6 +71,9 @@
 \newcommand{\SE}{S_{(E)}}
 \newcommand{\SP}{S_{(P)}}
 
+\newcommand{\ali}{\alpha_{i}}
+\newcommand{\alj}{\alpha_{j}}
+
 \addtolength{\oddsidemargin}{-.875in}
 	\addtolength{\evensidemargin}{-.875in}
 	\addtolength{\textwidth}{1.75in}
@@ -74,7 +84,6 @@
 \begin{document}
 \title{Máquinas de Vectores de Soporte}
 \section{El Problema de Clasificación}
-
 
 \begin{definition}
 Decimos que un problema es de clasificación binaria si el conjunto de datos es de la siguiente forma:
@@ -272,27 +281,27 @@ Empecemos por la función objetivo. Podemos observar que maximizar la cantidad $
 Veamos que podemos hacer respecto a las restricción. Hasta ahora tenemos el problema $(E)$:
 \begin{equation*}
 \begin{aligned}
-& \underset{(b,\wv)\in C}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
+& \underset{(b,\wv)\in \Rnu}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
 \text{s.a.}\ \
 & \text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}=1
 \end{aligned}
 \end{equation*}
-Podríamos tratar de hacer algo como el siguiente problema $(P)$:
+El dominio de la función objetivo y de las restricción se toma como $\Rnu$ ya que $\Dat$ tiene al menos un punto de cada clase de modo que las restricción en $(E)$ empuja a que $\wv\ne\z$. Podríamos ahora tratar de hacer algo como el siguiente problema $(P)$:
 \begin{equation*}
 \begin{aligned}
-& \underset{(b,\wv)\in C}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
+& \underset{(b,\wv)\in \Rnu}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
 \text{s.a.}\ \
 & y_{i}(\wv^{T}\x_{i}+b)\geq1\ \ \forall i=\Sm
 \end{aligned}
 \end{equation*}
 
-Aunque el problema $(P)$ tiene $m$ restricciones y $(E)$ solo tiene una, las restricciones de $(P)$ son mucho más fáciles de trabajar pues son afínes. Ahora, es claro que todo punto factible de $(E)$ también es punto factible de $(P)$. En principio, no hay ninguna razón que obligue a que lo recíproco sea cierto. Afortunadamente tenemos el siguiente resultado.
+A pesar de que $(P)$ tiene $m$ restricciones y $(E)$ solo tiene una, las restricciones de $(P)$ son mucho más fáciles de trabajar pues son afínes y también garantizan $\wv\ne\z$. Ahora, es claro que todo punto factible de $(E)$ también es punto factible de $(P)$. En principio, no hay ninguna razón que obligue a que lo recíproco sea cierto. Afortunadamente tenemos el siguiente resultado.
 
 \begin{proposition}
 Toda solución del problema $(P)$ también es solución del problema $(E)$
 \end{proposition}
 \begin{proof}
-En ambos problemas la función objetivo es $f:C\subseteq\Rnu\rightarrow\R$ dada por $f(b, \wv)=\frac{1}{2}\wv^{T}\wv$ y donde $C=\{(b,\wv)\in\Rnu: \wv\ne\z\}$. Sean $\SE$ y $\SP$ los subconjuntos de $C$ generados por las restricciones de $(E)$ y $(P)$ respectivamente. Notamos que $\SE\subseteq\SP$.\\
+En ambos problemas la función objetivo es $f:\Rnu\rightarrow\R$ dada por $f(b, \wv)=\frac{1}{2}\wv^{T}\wv$. Sean $\SE$ y $\SP$ los subconjuntos de $\Rnu$ generados por las restricciones de $(E)$ y $(P)$ respectivamente. Notamos que $\SE\subseteq\SP$.\\
 Sea $(\bc,\wc)$ un punto óptimo de $(P)$, i.e., $f(\bc, \wc)\leq f(b, \wv)\ \ \forall(b, \wv)\in\SP$.\\
 empecemos argumentando que $(\bc, \wc)\in\SE$. Si no fuése el caso, querría decir que
 $$k=\text{mín}\{y_{i}(\wv^{T}\x_{i}+b):\ i=\Sm \}>1$$
@@ -305,13 +314,14 @@ Definimos $\wo=k^{-1}\wc$, $\bo=k^{-1}\bc$. Notemos que $0<k^{-1}<1$. Además
 &=1
 \end{aligned}
 \end{equation*}
-lo cual implica que $(\bo, \wo)\in\SP$. Pero $\|\wo \|=k^{-1}\nw<\nw$ de modo que $f(\bo, \wo)<f(\bc, \wc)$ lo cual contradice que $(\bc,\wc)$ un punto óptimo de $(P)$.\\
+lo cual implica que $(\bo, \wo)\in\SP$. Pero $\|\wo \|=k^{-1}\nw<\nw$ de modo que $f(\bo, \wo)<f(\bc, \wc)$ lo cual contradice que $(\bc,\wc)$ es un punto óptimo de $(P)$.\\
 Ya tenemos que $(\bc,\wc)\in\SE$. Como $\SE\subseteq\SP$, se sigue que $f(\bc, \wc)\leq f(b, \wv)\ \ \forall(b, \wv)\in\SE$. Por lo tanto, $(\bc,\wc)$ es un punto óptimo de $(E)$ como se quería.
 \end{proof}
+
 Así las cosas, podemos concentrarnos en resolver el problema de optimización restricta $(P)$ del cual podemos observar lo siguiente:
 \begin{itemize}
 \item La suposición de que $\Dat$ es linealmente separable implica que el problema es factible.
-\item Es un problema convexo.
+\item Es un problema convexo, diferenciable y acotado inferiormente. Esto último porque $f(b, \wv)=\frac{1}{2}\wv^{T}\wv\geq0$ $\forall(b, \wv)\in\Rnu$.
 \item Es un problema de programación cuadrática (¿por qué?).
 \end{itemize}
 Este modelo de aprendizaje de máquina recibe el nombre de ``máquina de vectores de soporte con margen fuerte''.\\
@@ -319,6 +329,128 @@ Este modelo de aprendizaje de máquina recibe el nombre de ``máquina de vectore
 Dado que hay software especializado para resolver problemas de programación cuadrática, podríamos dar por finalizada la discusión. Sin embargo, todavía hay cosas que decir acerca del problema $(P)$. Aplicando la Teoría de Dualidad de Lagrange, podremos comprender más profundamente lo que acabamos de hacer y descubriremos nuevas técnicas en el proceso.
 
 \section{El problema dual}
+Empecemos por escribir $(P)$ de la siguiente manera:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b,\wv)\in \Rnu}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv \\
+\text{s.a.}\ \
+& 1-y_{i}(\wv^{T}\x_{i}+b)\leq0\ \ \forall i=\Sm
+\end{aligned}
+\end{equation*}
+
+El lagrangiano $\La:(\Rnu)\times\Rm\rightarrow\R$ está dado por
+\begin{equation*}
+\begin{aligned}
+\La(b, \wv, \av)&=\frac{1}{2}\wv^{T}\wv+\sum_{i=1}^{m}\ali[1-y_{i}(\wv^{T}\x_{i}+b)]\\
+&=\frac{1}{2}\wv^{T}\wv-\sum_{i=1}^{m}\ali y_{i}\wv^{T}\x_{i} -b\sum_{i=1}^{m}\ali y_{i}+\sum_{i=1}^{m}\ali
+\end{aligned}
+\end{equation*}
+
+Calculemos la función dual $g(\av)$. Para ello, fijamos $\av\in\Rm$ y buscamos el valor óptimo del problema irrestricto $(Q_{\av})$:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b, \wv)\in \Rnu}{\text{mín}}\ \ \ \frac{1}{2}\wv^{T}\wv-\sum_{i=1}^{m}\ali y_{i}\wv^{T}\x_{i} -b\sum_{i=1}^{m}\ali y_{i}+\sum_{i=1}^{m}\ali
+\end{aligned}
+\end{equation*}
+Esta función objetivo $k=k_{\av}=\La(\ \cdot\ ,\ \cdot\ ,\av)$ es convexa. Por lo tanto, basta resolver $\nabla k(b, \wv)=\overline{0}_{n+1}$.
+Tenemos que:
+\begin{equation*}
+\begin{aligned}
+\frac{\partial k}{\partial b}(b, \wv)&=-\sum_{i=1}^{m}\ali y_{i}\\
+\frac{\partial k}{\partial \wv}(b, \wv)&=\wv-\sum_{i=1}^{m}\ali y_{i}\x_{i}
+\end{aligned}
+\end{equation*}
+de modo que $\nabla k(b, \wv)=\overline{0}_{n+1}$ si y solamente si
+\begin{equation*}
+\begin{aligned}
+&\sum_{i=1}^{m}\ali y_{i}=0\\
+&\wv=\sum_{i=1}^{m}\ali y_{i}\x_{i}
+\end{aligned}
+\end{equation*}
+Parece que hay un problema. La idea era usar la condición $\nabla k(b, \wv)=\overline{0}_{n+1}$ para obtener el punto óptimo de $(R)$ y con el obtener el valor óptimo de $(Q)$. Sin embargo, la condición del gradiente solamente nos dice el valor óptimo de $\wv$, falta el de $b$. ¿Cómo podemos interpretar la situación?\\
+
+La clave está en entender el papel de la condición $\sum_{i=1}^{m}\ali y_{i}=0$ en la función objetivo $k(b, \wv)$. Supongamos que $\sum_{i=1}^{m}\ali y_{i}>0$. Eligiendo $\wv=\z$ y tomando valores de $b\in\R$ positivos y muy grandes, podemos concluir que
+$$g(\av)= \underset{(b, \wv)\in\Rnu}{\text{ínf}}\La(b,\wv,\av)=-\infty$$
+lo cual nos dice que $\av$ no estaría en el dominio de $g$ que se usa para plantear el problema dual. Lo mismo sucede si $\sum_{i=1}^{m}\ali y_{i}<0$. Concluimos que:
+$$A=\{\av\in\Rm: g(\av)>-\infty\}=\{\av\in\Rm: \sum_{i=1}^{m}\ali y_{i}=0\}$$
+Así las cosas, suponer $\sum_{i=1}^{m}\ali y_{i}=0$ es lo mismo que suponer $\av\in A$ y para dichos vectores $\av$, el valor óptimo de $(Q)$ se puede obtener sustituyendo $\wv=\sum_{i=1}^{m}\ali y_{i}\x_{i}$ en $k$ ya que el término correspondiente a $b$ desaparece. Después veremos como encontrar el valor óptimo de $b$.\\
+
+Haciendo la sustitución mencionada tenemos que $\forall\av\in A$:
+\begin{equation*}
+\begin{aligned}
+g(\av)&=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)-\sum_{i=1}^{m}\ali y_{i}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)^{T}\x_{i} +\sum_{i=1}^{m}\ali\\
+&=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}^{T}\right)\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)-\sum_{i=1}^{m}\ali y_{i}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}^{T}\right)\x_{i} +\sum_{i=1}^{m}\ali\\
+&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{j}^{T}x_{i}+\sum_{i=1}^{m}\ali\\
+&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}+\sum_{i=1}^{m}\ali\\
+&=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}+\sum_{i=1}^{m}\ali
+\end{aligned}
+\end{equation*}
+Recordemos que el problema dual $(D)$ es:
+\begin{equation*}
+\begin{aligned}
+& \underset{\av\in A}{\text{máx}}\ g(\av) \\
+& \text{s.a.}\ \ \av\geq\zm
+\end{aligned}
+\end{equation*}
+que es equivalente a:
+\begin{equation*}
+\begin{aligned}
+& \underset{\av\in\Rm}{\text{máx}}\ g(\av) \\
+\text{s.a.}\ \
+& \av\in A \\
+& \av\geq\zm
+\end{aligned}
+\end{equation*}
+que a su vez es equivalente a:
+\begin{equation*}
+\begin{aligned}
+ \underset{\av\in\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\ali \\
+\text{s.a.}\ \
+& \sum_{i=1}^{m}\ali y_{i}=0\\
+& \av\geq\zm
+\end{aligned}
+\end{equation*}
+El problema dual es convexo, tal como se esperaba según los resultados de(PRELIMINARES). Más aún, es un problema de programación cuadrática. ¿Qué más podemos decir de él?\\
+
+Tenemos que:
+\begin{itemize}
+\item[(i)] El problema $(P)$ es convexo y diferenciable. Además tiene solución lo cual implica que es acotado inferiormente.
+\item[(ii)] El dominio de la función objetivo de $(P)$ es $D=\Rnu$ que es abierto
+\item[(iii)] Las restricciones de $(P)$ son todas funciones afínes.
+\end{itemize}
+Por lo tanto, según el Teorema de Slater (PRELIMINARES), el problema dual $(D)$ tiene solución y hay dualidad fuerte. ¿Cómo podemos aprovechar la dualidad fuerte?\\
+
+Sean $(\bo, \wo)\in\Rnu$ y $\avo\in\Rm$ soluciones de $(P)$ y $(D)$ respectivamente. La dualidad fuerte implica, por el (PRELIMINARES), que se cumplen las 4 condiciones de Karush-Kuhn-Tucker:
+\begin{itemize}
+\item[(i)] $1-y_{i}(\wo^{T}\x_{i}+\bo)\leq0\ \ \forall i=\Sm$
+\item[(ii)] $\alio\geq0$ $\forall i=\Sm$
+\item[(iii)] $\alio[1-y_{i}(\wo^{T}\x_{i}+\bo)]=0$ $\forall i=\Sm$
+\item[(iv)] $\nabla k_{\avo}(\bo, \wo)=\znu$ lo cual significa que:
+\begin{equation*}
+\begin{aligned}
+&\sum_{i=1}^{m}\alio y_{i}=0\\
+&\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}
+\end{aligned}
+\end{equation*}
+\end{itemize}
+Vemos que el valor óptimo de $\wv$ es $\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}$. Esto es, el valor óptimo de $\wv$ es una combinación lineal de los vectores en el conjunto de datos $\Dat$. Además, los coeficientes de la combinación lineal coinciden con las entradas del punto óptimo del problema dual.\\
+
+¿Qué hay de $\bo$? Empecemos por notar que $\alio=0\ \ \forall i=\Sm$ es imposible pues de ser así, tendríamos $\wo=\z$ lo cual es imposible porque $\Dat$ tiene al menos un punto de cada clase. Por lo tanto, $\exists\alio>0$ p.a. $i\in\{1,2,\ldots,m\}$. Si $\aljo>0$, la condición (KKT) en (iii) implica que $1-y_{j}(\wo^{T}\x_{j}+\bo)=0$ y por lo tanto:
+$$y_{j}(\wo^{T}\x_{j}+\bo)=1$$
+lo cual significa que $\x_{j}$ está sobre el margen del hiperplano óptimo (además, $\bo$ se puede despejar de la ecuación anterior). Es por esto que si $\aljo>0$ el correspondiente $\x_{j}$ recibe el nombre de \emph{vector de soporte}. En cierto sentido, los vectores de soporte son los que impiden que el margen del hiperplano óptimo se expanda. Es importante notar que todo $\x_{i}$ sobre el margen del hiperplano óptimo es ``candidato'' a ser vector de soporte, pero solamente aquellos con el correspondiente coeficiente $\alio>0$ son los vectores de soporte.\\
+
+Así pues, la solución del problema original se puede obtener a partir de la solución del problema dual:
+\begin{equation*}
+\begin{aligned}
+\wo&=\sum_{\alio>0}\alio y_{i}\x_{i}\\
+\bo&=y_{s}-\wo^{T}\x_{s}
+\end{aligned}
+\end{equation*}
+donde $\x_{s}$ es cualquier vector de soporte. Los vectores de soporte, que son identificados por el problema dual, son los únicos que se requieren para resolver $(P)$. Esto es parte de lo que hace a este modelo de aprendizaje tan robusto.\\
+
+En las siguientes secciones veremos que podemos hacer para trabajar con conjuntos de datos que no son linealmente separables.
+
+
 
 
 
