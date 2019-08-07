@@ -13,6 +13,7 @@
 \setlength{\parindent}{0pt}
 
 \newcommand{\Rn}{\mathbb{R}^{n}}
+\newcommand{\Rm}{\mathbb{R}^{m}}
 \newcommand{\Rp}{\mathbb{R}^{p}}
 \newcommand{\Rq}{\mathbb{R}^{q}}
 \newcommand{\R}{\mathbb{R}}
@@ -46,6 +47,7 @@
 \newcommand{\xc}{\widetilde{x}}
 \newcommand{\muc}{\widetilde{\mu}}
 \newcommand{\lac}{\widetilde{\lambda}}
+\newcommand{\tq}{\cdot\backepsilon\cdot}
 
 
 \addtolength{\oddsidemargin}{-.875in}
@@ -60,6 +62,68 @@
 
 \begin{document}
 \chapter{Cálculo Diferencial Multivariable}
+La notación 
+$$f:D\subseteq\Rn\rightarrow\Rm$$
+significa que $f$ es una función de $\Rn$ a $\Rm$ cuyo dominio es $D$. Cuando $D=\Rn$ escribimos $f:\Rn\rightarrow\Rm$.
+
+\section{Límites}
+
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$, $\xz\in D'$ y $L\in\R$.\\
+Decimos que $L$ es un límite de $f$ en $\xz$ si y solamente si
+$$\forall\epsilon>0\ \ \exists\delta=\delta(\epsilon, \xz)>0\ \ \tq\ \ \forall\x\in D\ \ \text{si}\ \ 0<\| \x-\xz \|<\delta\Rightarrow|f(\x)-L|<\epsilon$$
+Usando vecindades, equivale a:
+$$\forall\epsilon>0\ \ \exists\delta=\delta(\epsilon, \xz)>0\ \ \tq\ \ \forall\x\in V_{\delta}^{\circ}(\xz)\cap D,\ \ f(\x)\in V_{\epsilon}(L)$$
+Usando sucesiones, equivale a:
+$$\forall(\x_{k})_{k=1}^{+\infty}\subseteq D\setminus\{\xz\}\ \ \text{si}\ \ \x_{k}\xrightarrow{k\rightarrow+\infty}\xz\ \ \text{entonces}\ \ f(\x_{k})\xrightarrow{k\rightarrow+\infty}L$$
+\end{definition}
+
+\begin{observation}
+En caso de existir, el límite de $f$ en $\xz$ es único y se representa con el símbolo
+$$\lim_{\x\to\xz}f(\x)$$
+\end{observation}
+
+\begin{proposition}
+Sean $f, g:D\subseteq\Rn\rightarrow\R$ y $\xz\in D'$.\\
+Supongamos que $\lim_{\x\to\xz}f(\x)=L$, $\lim_{\x\to\xz}g(\x)=M$ donde $L, M\in\R$. Entonces:
+\begin{itemize}
+\item[(i)] $\lim_{\x\to\xz}(cf)(\x)=cL$, $\forall c\in\R$.
+\item[(ii)] $\lim_{\x\to\xz}(f\pm g)(\x)=L\pm M$.
+\item[(iii)] $\lim_{\x\to\xz}(fg)(\x)=LM$.
+\item[(iv)] $\lim_{\x\to\xz}\left(\frac{f}{g}\right)(\x)=\frac{L}{M}$, si $M\ne0$.
+\end{itemize}
+\end{proposition}
+
+\section{Continuidad}
+
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$.\\
+Decimos que $f$ es continua en $\xz$ si y solamente si
+$$\forall\epsilon>0\ \ \exists\delta=\delta(\epsilon, \xz)>0\ \ \tq\ \ \forall\x\in D\ \ \text{si}\ \ \| \x-\xz \|<\delta\Rightarrow|f(\x)-L|<\epsilon$$
+Usando vecindades, equivale a:
+$$\forall\epsilon>0\ \ \exists\delta=\delta(\epsilon, \xz)>0\ \ \tq\ \ \forall\x\in V_{\delta}(\xz)\cap D,\ \ f(\x)\in V_{\epsilon}(L)$$
+Usando sucesiones, equivale a:
+$$\forall(\x_{k})_{k=1}^{+\infty}\subseteq D\ \ \text{si}\ \ \x_{k}\xrightarrow{k\rightarrow+\infty}\xz\ \ \text{entonces}\ \ f(\x_{k})\xrightarrow{k\rightarrow+\infty}L$$
+\end{definition}
+
+\begin{observation} Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$.
+\begin{itemize}
+\item[(i)] Si $\xz$ es punto aislado de $D$, entonces $f$ es continua en $D$.
+\item[(ii)] Si $\xz\in D'$, entonces $f$ es continua en $\xz$ si y solamente si $\lim_{\x\to\xz}f(\x)=f(\xz)$.
+\end{itemize}
+\end{observation}
+
+\begin{proposition}
+Sean $f, g:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$. Supongamos que $f$ y $g$ son continuas en $\xz$. Entonces:
+\begin{itemize}
+\item[(i)] $cf$ es continua en $\xz$, $\forall c\in\R$.
+\item[(ii)] $f\pm g$ es continua en $\xz$.
+\item[(iii)] $fg$ es continua en $\xz$.
+\item[(iv)] $\frac{f}{g}$ es continua en $\xz$, si $g(\xz)\ne0$.
+\end{itemize}
+\end{proposition}
+
+\section{Derivabilidad}
+
+
 \chapter{Convexidad}
 \begin{definition}
 Sean $\x,\y\in\Rn$. Definimos el segmento que une a $\x$ con $\y$ como
