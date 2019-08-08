@@ -157,17 +157,56 @@ Sean $\wv\in\Rnz$, $b\in\R$ y $\xz\in\Rn$ fijos.
 \item[(i)] El problema
 \begin{equation*}
 \begin{aligned}
-& \underset{\x\in D}{\text{mín}} \|\x-\xz\| \\
+& \underset{\x\in \Rn}{\text{mín}}\ \|\x-\xz\| \\
 \text{s.a.}\ \
 & \x\in H(\wv, b)
 \end{aligned}
 \end{equation*}
-tiene solución única. Se define la distancia de $\xz$ a $H=H(\wv, b)$ como $d(\xz, H)= d(\xz,\xo)$.
+tiene solución única $\xo$. Se define la distancia de $\xz$ a $H=H(\wv, b)$ como $d(\xz, H)= d(\xz,\xo)$.
 \item[(ii)] $d(\xz, H)=\frac{|\wv^{T}\xz+b|}{\nw}$
 \end{itemize}
 \end{proposition}
 \begin{proof}
-n
+Para $(i)$, resolveremos el problema equivalente:
+\begin{equation*}
+\begin{aligned}
+& \underset{\x\in \Rn}{\text{mín}}\ \frac{1}{2} \|\x-\xz\|^{2} \\
+\text{s.a.}\ \
+& \wv^{T}\x+b=0
+\end{aligned}
+\end{equation*}
+cuya función objetivo es estrictamente convexa. No hay restricciones de desigualdad. Encontraremos la solución usando las condiciones de Karush--Kuhn--Tucker $(i)$ y $(iv)$. Después argumentaremos formalmente el resultado.\\
+Consideremos el lagrangiano:
+$$\La(\x, \lambda)=\frac{1}{2}\|\x-\xz\|^{2}+\lambda(\wv^{T}\x+b)$$
+Tenemos que:
+$$\nabla_{\x}\La(\x, \lambda)=(\x-\xz)+\lambda\wv$$
+y así, $\nabla_{\x}\La(\x, \lambda)=\z$ si y solamente si $\x=\xz-\lambda\wv$. Sustituyendo lo anterior en la restricción tenemos que:
+\begin{equation*}
+\begin{aligned}
+&\wv^{T}(\xz-\lambda\wv)+b=0 \\
+\Leftrightarrow\ \ &\wv^{T}\xz-\lambda\wv^{T}\wv+b=0 \\
+\Leftrightarrow\ \ &\lambda=\frac{\wv^{T}\xz+b}{\wv^{T}\wv}
+\end{aligned}
+\end{equation*}
+Así las cosas, \emph{definimos}:
+\begin{equation*}
+\begin{aligned}
+\lambda^{*}&=\frac{\wv^{T}\xz+b}{\nw^{2}}\\
+\xo&=\xz-\lambda^{*}\wv
+\end{aligned}
+\end{equation*}
+Es fácil ver que $\xo$ y $\lambda^{*}$ satisfacen las cuatro condiciones de Karush--Kuhn--Tucker. Como el problema en cuestión es convexo y diferenciable, se sigue del teorema (PRELIMINARES) que $\xo$ es solución del problema primal, $\lambda^{*}$ es solución del problema dual y hay dualidad fuerte. La unicidad se sigue de que $\xo$ y $\lambda^{*}$ son los únicos valores que satisfacen las condiciones de Karush--Kuhn--Tucker y del teorema (PRELIMINARES).\\
+Para $(ii)$, tenemos que
+\begin{equation*}
+\begin{aligned}
+d(\xz, H)&=d(\xz, \xo) \\%&&\text{... definición}\\
+&=\|\xz-\xo\| \\%&&\text{... definición}\\
+&=\|\xz-(\xz-\lambda^{*}\wv)\| \\%&&\text{... definición}\\
+&=|\lambda^{*}|\nw \\
+&=\left|\frac{\wv^{T}\xz+b}{\nw^{2}}\right| \nw\\
+&=\frac{|\wv^{T}\xz+b|}{\nw}
+\end{aligned}
+\end{equation*} 
 \end{proof}
 
 Veamos si con la información que tenemos hasta el momento podemos dar una fórmula para el margen geométrico de un hiperplano respecto a un conjunto de datos.\\
@@ -192,7 +231,6 @@ Sean $\wv\in\Rnz$ y $b, k\in\R$.
 \item[(ii)] Si $k>0$ y $H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, kb)$ también separa a $\Dat$.
 \end{itemize}
 \end{proposition}
-
 
 Es importante recalcar que si $H=H(\wv, b)$ separa a $\Dat$, entonces $H(k\wv, kb)$ puede o no seguir separando a $\Dat$. Si $k>0$, demostramos que la nueva representación de $H$ sigue separando a $\Dat$. Si $k<0$, ya no sería el caso. Como objeto geométrico, $H$ seguiría separando ``físicamente'' a los puntos de $\Dat$ pero $k\wv$ apunta en dirección contraria a $\wv$ de modo que la clasificación de los puntos quedaría invertida. (ejercicio)\\
 
