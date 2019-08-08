@@ -21,6 +21,8 @@
 \newcommand{\mv}{\overline{\mu}}
 \newcommand{\lv}{\overline{\lambda}}
 \newcommand{\thv}{\overline{\theta}}
+\newcommand{\ev}{\overline{e}}
+\newcommand{\azv}{\overline{a}_{0}}
 \newcommand{\bv}{\overline{b}}
 \newcommand{\x}{\overline{x}}
 \newcommand{\xz}{\overline{x}_{0}}
@@ -29,6 +31,7 @@
 \newcommand{\zp}{\overline{0}_{p}}
 \newcommand{\Jxz}{J(\overline{x}_{0})}
 
+\newcommand{\Sn}{1,2,\ldots, n}
 \newcommand{\Sp}{1,2,\ldots, p}
 \newcommand{\Sq}{1,2,\ldots, q}
 
@@ -49,6 +52,13 @@
 \newcommand{\lac}{\widetilde{\lambda}}
 \newcommand{\tq}{\cdot\backepsilon\cdot}
 
+\newcommand{\dfxi}{\frac{\partial f}{\partial x_{i}}}
+\newcommand{\fxi}{f_{x_{i}}}
+\newcommand{\gxi}{g_{x_{i}}}
+\newcommand{\cfxi}{(cf)_{x_{i}}}
+\newcommand{\fmgxi}{(f\pm g)_{x_{i}}}
+\newcommand{\fpgxi}{(fg)_{x_{i}}}
+\newcommand{\fegxi}{\left(\frac{f}{g}\right)_{x_{i}}}
 
 \addtolength{\oddsidemargin}{-.875in}
 	\addtolength{\evensidemargin}{-.875in}
@@ -57,16 +67,15 @@
 	\addtolength{\topmargin}{-.875in}
 	\addtolength{\textheight}{1.75in}
 
-
-
-
 \begin{document}
 \chapter{Cálculo Diferencial Multivariable}
-La notación 
+La notación
 $$f:D\subseteq\Rn\rightarrow\Rm$$
-significa que $f$ es una función de $\Rn$ a $\Rm$ cuyo dominio es $D$. Cuando $D=\Rn$ escribimos $f:\Rn\rightarrow\Rm$.
+significa que $f$ es una función de $\Rn$ a $\Rm$ cuyo dominio es $D=D_{f}$. Cuando $D=\Rn$ escribimos $f:\Rn\rightarrow\Rm$. El rango de $f$ está definido como $R_{f}=\{y\in\R:\ \exists\x\in D_{f}\ \tq\ f(\x)=y\}$.
+\section{Funciones de $\Rn$ a $\R$}
+Empezaremos con las definiciones y resultados básicos para \emph{funciones reales de variable vectorial}. Cuando $n=1$, se recuperan los enunciados correspondientes para funciones reales de variable real.
 
-\section{Límites}
+\subsection{Límites}
 
 \begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$, $\xz\in D'$ y $L\in\R$.\\
 Decimos que $L$ es un límite de $f$ en $\xz$ si y solamente si
@@ -84,16 +93,16 @@ $$\lim_{\x\to\xz}f(\x)$$
 
 \begin{proposition}
 Sean $f, g:D\subseteq\Rn\rightarrow\R$ y $\xz\in D'$.\\
-Supongamos que $\lim_{\x\to\xz}f(\x)=L$, $\lim_{\x\to\xz}g(\x)=M$ donde $L, M\in\R$. Entonces:
+Supongamos que $\exists\lim_{\x\to\xz}f(\x)=L$, $\exists\lim_{\x\to\xz}g(\x)=M$ donde $L, M\in\R$. Entonces:
 \begin{itemize}
-\item[(i)] $\lim_{\x\to\xz}(cf)(\x)=cL$, $\forall c\in\R$.
-\item[(ii)] $\lim_{\x\to\xz}(f\pm g)(\x)=L\pm M$.
-\item[(iii)] $\lim_{\x\to\xz}(fg)(\x)=LM$.
-\item[(iv)] $\lim_{\x\to\xz}\left(\frac{f}{g}\right)(\x)=\frac{L}{M}$, si $M\ne0$.
+\item[(i)] $\exists\lim_{\x\to\xz}(cf)(\x)=cL$, $\forall c\in\R$.
+\item[(ii)] $\exists\lim_{\x\to\xz}(f\pm g)(\x)=L\pm M$.
+\item[(iii)] $\exists\lim_{\x\to\xz}(fg)(\x)=LM$.
+\item[(iv)] $\exists\lim_{\x\to\xz}\left(\frac{f}{g}\right)(\x)=\frac{L}{M}$, si $M\ne0$.
 \end{itemize}
 \end{proposition}
 
-\section{Continuidad}
+\subsection{Continuidad}
 
 \begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$.\\
 Decimos que $f$ es continua en $\xz$ si y solamente si
@@ -106,8 +115,8 @@ $$\forall(\x_{k})_{k=1}^{+\infty}\subseteq D\ \ \text{si}\ \ \x_{k}\xrightarrow{
 
 \begin{observation} Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$.
 \begin{itemize}
-\item[(i)] Si $\xz$ es punto aislado de $D$, entonces $f$ es continua en $D$.
-\item[(ii)] Si $\xz\in D'$, entonces $f$ es continua en $\xz$ si y solamente si $\lim_{\x\to\xz}f(\x)=f(\xz)$.
+\item[(i)] Si $\xz$ es punto aislado de $D$, entonces $f$ es continua en $\xz$.
+\item[(ii)] Si $\xz\in D'$, entonces $f$ es continua en $\xz$ si y solamente si $\exists\lim_{\x\to\xz}f(\x)=f(\xz)$.
 \end{itemize}
 \end{observation}
 
@@ -121,8 +130,55 @@ Sean $f, g:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$. Supongamos que $f$ y $g$ so
 \end{itemize}
 \end{proposition}
 
-\section{Derivabilidad}
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $A\subseteq D$. Decimos que $f$ es continua en $A$, denotado $f\in C_{A}$, si y solamente si $\forall\azv\in A$ se tiene que $f$ es continua en $\azv$.
+\end{definition}
+Notamos que la proposición anterior sigue siendo válida reemplazando continuidad en $\xz$ por continuidad en $A$.
 
+\subsection{Derivabilidad}
+\begin{definition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Definimos la derivada parcial de $f$ respecto a la i--ésima variable $x_{i}$ en $\xz$ como el valor del siguiente límite (en caso de existir y ser un número real):
+$$\fxi(\xz)=\lim_{h\to 0}\frac{f(\xz+h \ev_{i})-f(\xz)}{h}$$
+\end{definition}
+
+\begin{proposition}
+Sean $f,g:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ e $i\in\{1,2,\ldots,n\}$ cualquiera.\\
+Supongamos que $\exists\fxi(\xz)$, $\exists\gxi(\xz)$. Entonces:
+\begin{itemize}
+\item[(i)] $\exists\cfxi(\xz)=c\fxi(\xz)$, $\forall c\in\R$.
+\item[(ii)] $\exists\fmgxi(\xz)=\fxi(\xz)\pm\gxi(\xz)$
+\item[(iii)] $\exists\fpgxi(\xz)=\fxi(\xz)g(\xz)+f(\xz)\gxi(\xz)$
+\item[(iv)] $\exists\fegxi(\xz)=\frac{\fxi(\xz)g(\xz)-f(\xz)\gxi(\xz)}{[g(\xz)]^{2}}$, si $g\in C_{\{\xz\}}$ y $g(\xz)\ne0$.
+\end{itemize}
+\end{proposition}
+
+\begin{definition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Decimos que $f$ es derivable en $\xz$ si y solamente si $\exists\fxi(\xz)$ $\forall i=\Sn$. En tal caso, se definen:
+\begin{itemize}
+\item[(i)] $D f(\xz)=[f_{x_{1}}(\xz), f_{x_{2}}(\xz), \ldots, f_{x_{n}}(\xz)]\in\R^{1\times n}$
+\item[(ii)] $\nabla f(\xz)=D f(\xz)^{T}\in\R^{n\times 1}$
+\end{itemize}
+\end{definition}
+
+\begin{proposition}
+Sean $f,g:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ e $i\in\{1,2,\ldots,n\}$ cualquiera.\\
+Supongamos que $f$ y $g$ son derivables en $\xz$. Entonces:
+\begin{itemize}
+\item[(i)] $cf$ es derivable en $\xz$, $\forall c\in\R$ y
+$$\nabla(cf)(\xz)=c\nabla f(\xz)$$
+\item[(ii)] $f\pm g$ es derivable en $\xz$ y
+$$\nabla(f\pm g)(\xz)=\nabla f(\xz)+\nabla g(\xz)$$
+\item[(iii)] $fg$ es derivable en $\xz$ y
+$$\nabla (fg)(\xz)=g(\xz)\nabla f(\xz)+f(\xz)\nabla g(\xz)$$
+\item[(iv)] $\frac{f}{g}$ es derivable en $\xz$, si $g\in C_{\{\xz\}}$ y $g(\xz)\ne0$. Además,
+$$\nabla\left(\frac{f}{g}\right)(\xz)=\frac{1}{g(\xz)^{2}}[g(\xz)\nabla f(\xz)-f(\xz)\nabla g(\xz)]$$
+\end{itemize}
+\end{proposition}
+
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $A\subseteq D$. Decimos que $f$ es derivable en $A$, denotado $f\in C_{A}^{'}$, si y solamente si $\forall\azv\in A$ se tiene que $f$ es derivable en $\azv$.
+\end{definition}
+Notamos que la proposición anterior sigue siendo válida reemplazando derivabilidad en $\xz$ por derivabilidad en $A$. Las ecuaciones en cuestión se vuelven válidas $\forall\azv\in A$.
+
+\subsection{Diferenciabilidad}
 
 \chapter{Convexidad}
 \begin{definition}
@@ -521,7 +577,6 @@ Entonces, el problema $(D)$ tiene solución y hay dualidad fuerte. %este teorema
 \end{theorem}
 
 \section*{Ejercicios}
-
 
 \chapter{Optimización 2}
 
