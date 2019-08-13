@@ -9,6 +9,7 @@
 \newtheorem{theorem}{Teorema}[section]
 \newtheorem{observation}{Observación}[section]
 \newtheorem{proposition}{Proposición}[section]
+\newtheorem{exercise}{Ejercicio}[section]
 
 \setlength{\parindent}{0pt}
 
@@ -53,12 +54,12 @@
 \newcommand{\tq}{\cdot\backepsilon\cdot}
 
 \newcommand{\dfxi}{\frac{\partial f}{\partial x_{i}}}
-\newcommand{\fxi}{f_{x_{i}}}
-\newcommand{\gxi}{g_{x_{i}}}
-\newcommand{\cfxi}{(cf)_{x_{i}}}
-\newcommand{\fmgxi}{(f\pm g)_{x_{i}}}
-\newcommand{\fpgxi}{(fg)_{x_{i}}}
-\newcommand{\fegxi}{\left(\frac{f}{g}\right)_{x_{i}}}
+\newcommand{\fxi}{D_{i}f}
+\newcommand{\gxi}{D_{i}g}
+\newcommand{\cfxi}{D_{i}(cf)}
+\newcommand{\fmgxi}{D_{i}(f\pm g)}
+\newcommand{\fpgxi}{D_{i}(fg)}
+\newcommand{\fegxi}{D_{i}\left(\frac{f}{g}\right)}
 
 \addtolength{\oddsidemargin}{-.875in}
 	\addtolength{\evensidemargin}{-.875in}
@@ -71,7 +72,7 @@
 \chapter{Cálculo Diferencial Multivariable}
 La notación
 $$f:D\subseteq\Rn\rightarrow\Rm$$
-significa que $f$ es una función de $\Rn$ a $\Rm$ cuyo dominio es $D=D_{f}$. Cuando $D=\Rn$ escribimos $f:\Rn\rightarrow\Rm$. El rango de $f$ está definido como $R_{f}=\{y\in\R:\ \exists\x\in D_{f}\ \tq\ f(\x)=y\}$.
+significa que $f$ es una función de $\Rn$ a $\Rm$ cuyo dominio es $D=D_{f}$. Cuando $D=\Rn$ escribimos $f:\Rn\rightarrow\Rm$. El rango de $f$ está definido como $R_{f}=\{\y\in\Rm:\ \exists\x\in D_{f}\ \tq\ f(\x)=\y\}$.
 \section{Funciones de $\Rn$ a $\R$}
 Empezaremos con las definiciones y resultados básicos para \emph{funciones reales de variable vectorial}. Cuando $n=1$, se recuperan los enunciados correspondientes para funciones reales de variable real.
 
@@ -130,16 +131,17 @@ Sean $f, g:D\subseteq\Rn\rightarrow\R$ y $\xz\in D$. Supongamos que $f$ y $g$ so
 \end{itemize}
 \end{proposition}
 
-\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $A\subseteq D$. Decimos que $f$ es continua en $A$, denotado $f\in C_{A}$, si y solamente si $\forall\azv\in A$ se tiene que $f$ es continua en $\azv$.
+\begin{definition} Sea $f:D\subseteq\Rn\rightarrow\R$. Decimos que $f$ es continua en $D$, denotado $f\in C_{D}$, si y solamente si $\forall\xz\in D$ se tiene que $f$ es continua en $\xz$.
 \end{definition}
-Notamos que la proposición anterior sigue siendo válida reemplazando continuidad en $\xz$ por continuidad en $A$.
+Notamos que la proposición anterior sigue siendo válida reemplazando continuidad en $\xz$ por continuidad en $D$.
 
 \subsection{Derivabilidad}
+
 \begin{definition}
 Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Definimos la derivada parcial de $f$ respecto a la i--ésima variable $x_{i}$ en $\xz$ como el valor del siguiente límite (en caso de existir y ser un número real):
-$$\fxi(\xz)=\lim_{h\to 0}\frac{f(\xz+h \ev_{i})-f(\xz)}{h}$$
+$$\frac{\partial f}{\partial x_{i}}(\xz)=\fxi(\xz)=\lim_{h\to 0}\frac{f(\xz+h \ev_{i})-f(\xz)}{h}$$
 \end{definition}
-
+Usaremos la notación según sea conveniente.
 \begin{proposition}
 Sean $f,g:D\subseteq\Rn\rightarrow\R$, $\xz\in int(D)$ e $i\in\{1,2,\ldots,n\}$ cualquiera.\\
 Supongamos que $\exists\fxi(\xz)$, $\exists\gxi(\xz)$. Entonces:
@@ -174,11 +176,84 @@ $$\nabla\left(\frac{f}{g}\right)(\xz)=\frac{1}{g(\xz)^{2}}[g(\xz)\nabla f(\xz)-f
 \end{itemize}
 \end{proposition}
 
-\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ y $A\subseteq D$. Decimos que $f$ es derivable en $A$, denotado $f\in C_{A}^{'}$, si y solamente si $\forall\azv\in A$ se tiene que $f$ es derivable en $\azv$.
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Decimos que $f$ es derivable en $D$, denotado $f\in C_{D}^{(1)}$, si y solamente si $\forall\xz\in D$ se tiene que $f$ es derivable en $\xz$.
 \end{definition}
-Notamos que la proposición anterior sigue siendo válida reemplazando derivabilidad en $\xz$ por derivabilidad en $A$. Las ecuaciones en cuestión se vuelven válidas $\forall\azv\in A$.
+Notamos que la proposición anterior sigue siendo válida reemplazando derivabilidad en $\xz$ por derivabilidad en $D$. Las ecuaciones en cuestión se vuelven válidas $\forall\xz\in D$.\\
+
+
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto e $i\in\{1, 2, \ldots, n\}$ cualquiera. Supongamos que $\exists\fxi(\x)$ $\forall \x\in D$. Tenemos que entonces:
+$$\fxi:D\subseteq\Rn\rightarrow\R$$
+i.e. $\fxi$ es una función real de variable vectorial con dominio $D$ abierto. Podemos entonces preguntarnos por las derivadas parciales de $\fxi$ que serían ejemplos de \emph{derivadas parciales de segundo orden.}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto e $i\in\{1, 2, \ldots, n\}$ cualquiera. Supongamos que $\exists\fxi(\x)$ $\forall \x\in D$. Para cada $j=\Sn$ definimos (en caso de existir):
+$$\frac{\partial^{2}f}{\partial x_{j}\partial x_{i}}(\xz)=D_{ji}f(\xz)=D_{j}(\fxi)(\xz)$$
+es decir:
+$$\frac{\partial^{2}f}{\partial x_{j}\partial x_{i}}(\xz)=D_{ji}f(\xz)=\lim_{h\to0}\frac{\fxi(\xz+h\ev_{j})-\fxi(\xz)}{h}$$
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Decimos que $f$ es dos veces derivable en $D$, denotado $f\in C_{D}^{(2)}$, si y solamente si todas las derivadas parciales de segundo orden de $f$ existen en $D$.\\
+Esto implica que todas las derivadas parciales de primer orden de $f$ existen en $D$, i.e. $f\in C_{D}^{(1)}$.
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Decimos que:
+\begin{itemize}
+\item[(i)] $f$ es de clase $C^{1}$ en $D$, denotado $f\in C_{D}^{1}$, si y solamente si $f$ todas las derivadas parciales de primer orden de $f$ existen en $D$ y son continuas en $D$.
+\item[(ii)] $f$ es de clase $C^{2}$ en $D$, denotado $f\in C_{D}^{2}$, si y solamente si todas las derivadas parciales de primer y segundo orden de $f$ existen en $D$ y son continuas en $D$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Supongamos que $f\in C_{D}^{2}$. Entonces $\forall i=\Sn$, $\forall j=\Sn$:
+$$D_{ij}f(\x)=D_{ji}(\x)\ \ \forall\x\in D$$
+\end{definition}
+
+\begin{definition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto y $\xz\in D$. Supongamos que $f\in C_{D}^{2}$. Definimos la matriz Hessiana de $f$ en $\xz$, denotada $\nabla^{2}f(\xz)$, como:
+$$[\nabla^{2}f(\xz)]_{ij}=D_{ij}f(\xz)\ \ \forall i=\Sn\ \ \forall j=\Sn$$
+Observemos que $\nabla^{2}f(\xz)\in\R^{n\times n}$ es simétrica.
+\end{definition}
 
 \subsection{Diferenciabilidad}
+\begin{definition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Decimos que $f$ es diferenciable en $\xz$ si y solamente si $\exists L:\Rn\rightarrow\R$ lineal tal que:
+$$\exists\lim_{\x\to\xz}\frac{f(\x)-f(\xz)-L(\x-\xz)}{\|\x-\xz\|}=0$$
+Es posible demostrar que dicha función lineal $L$ es única cuando existe.
+\end{definition}
+
+\begin{proposition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Si $f$ es diferenciable en $\xz$ entonces $f$ es continua en $\xz$.
+\end{proposition}
+
+\begin{proposition}
+Sean $f:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Si $f$ es diferenciable en $\xz$ entonces $f$ es derivable en $\xz$. Más aún, se tiene que $\forall\x\in\Rn$:
+$$L(\x)=\nabla f(\x)^{T}\x=Df(\xz)\x$$
+donde $L$ es la lineal dada por la diferenciabilidad de $f$ en $\xz$.
+\end{proposition}
+
+\begin{proposition}
+Sean $f,g:D\subseteq\Rn\rightarrow\R$ y $\xz\in int(D)$. Supongamos que $f$ y $g$ son diferenciables en $\xz$. Entonces:
+\begin{itemize}
+\item[(i)] $cf$ es diferenciable en $\xz$, $\forall c\in\R$.
+\item[(ii)] $f\pm g$ es diferenciable en $\xz$.
+\item[(iii)] $fg$ es diferenciable en $\xz$.
+\item[(iv)] $\frac{f}{g}$ es diferenciable en $\xz$, si $g(\xz)\ne0$.
+\end{itemize}
+\end{proposition}
+
+\begin{definition} Sean $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Decimos que $f$ es diferenciable en $D$ si y solamente si $\forall\xz\in D$ se tiene que $f$ es diferenciable en $\xz$.
+\end{definition}
+Notamos que la proposición anterior sigue siendo válida reemplazando diferenciabilidad en $\xz$ por diferenciabilidad en $D$. Las ecuaciones en cuestión se vuelven válidas $\forall\xz\in D$.
+
+\begin{proposition}
+Sea $f:D\subseteq\Rn\rightarrow\R$ con $D$ abierto. Si $f\in C_{D}^{1}$, entonces $f$ es diferenciable en $D$.
+\end{proposition}
+
+\section{Funciones de $\Rn$ a $\Rm$}
+Veremos ahora las definiciones y resultados básicos para \emph{funciones vectoriales de variable vectorial}.
+
 
 \chapter{Convexidad}
 \begin{definition}
@@ -308,7 +383,7 @@ Sean $f:D\subseteq\Rn\rightarrow\R$, $S\subseteq D$ y $\xz\in S$. Decimos que:
 \end{itemize}
 \end{definition}
 
-Como en el caso restricto, son de mayor interés los problemas de tipo global.
+Como en el caso irrestricto, son de mayor interés los problemas de tipo global.
 
 \begin{definition}{(Problema de Optimización Global Restricta)}\\
 Dada $f:D\subseteq\Rn\rightarrow\R$ y $S\subseteq D$, minimizar $f(\x)$ sobre todos los $\x\in D$ que satisfacen la restricción $\x\in S$. Esto es, encontrar los vectores $\x \in S$ donde $f$ alcanza un mínimo global de acuerdo a la definición anterior.\\
