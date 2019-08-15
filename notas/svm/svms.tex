@@ -18,11 +18,14 @@
 \newcommand{\Rp}{\R^{p}}
 \newcommand{\Rq}{\R^{q}}
 \newcommand{\Rnu}{\R\times\Rn}
+\newcommand{\Runm}{\R\times\Rn\times\Rm}
 
 \newcommand{\mv}{\overline{\mu}}
 \newcommand{\lv}{\overline{\lambda}}
+\newcommand{\xiv}{\overline{\xi}}
 \newcommand{\thv}{\overline{\theta}}
 \newcommand{\av}{\overline{\alpha}}
+\newcommand{\bev}{\overline{\beta}}
 \newcommand{\wv}{\overline{w}}
 \newcommand{\bv}{\overline{b}}
 \newcommand{\x}{\overline{x}}
@@ -73,6 +76,8 @@
 
 \newcommand{\ali}{\alpha_{i}}
 \newcommand{\alj}{\alpha_{j}}
+\newcommand{\bei}{\beta_{i}}
+\newcommand{\xii}{\xi_{i}}
 
 \addtolength{\oddsidemargin}{-.875in}
 	\addtolength{\evensidemargin}{-.875in}
@@ -100,7 +105,7 @@ Dados $\wv\in\Rn$ y $b\in\R$, distinguimos los siguientes tres conjuntos:
 \item[(ii)] $H(\wv, b)=\{\x\in\Rn:\wv^{T}\x+b=0\}$
 \item[(iii)] $H^{-}(\wv, b)=\{\x\in\Rn:\wv^{T}\x+b<0\}$
 \end{itemize}
-Al conjunto $H(\wv, b)$ se le llama \emph{hiperplano} y a los conjuntos $H^{+}(\wv, b), H^{+}(\wv, b)$ se les llama \emph{semiespacios}.
+Al conjunto $H(\wv, b)$ se le llama \emph{hiperplano} y a los conjuntos $H^{+}(\wv, b),\ H^{-}(\wv, b)$ se les llama \emph{semiespacios}.
 \end{definition}
 
 \begin{definition}
@@ -206,7 +211,7 @@ d(\xz, H)&=d(\xz, \xo) \\%&&\text{... definición}\\
 &=\left|\frac{\wv^{T}\xz+b}{\nw^{2}}\right| \nw\\
 &=\frac{|\wv^{T}\xz+b|}{\nw}
 \end{aligned}
-\end{equation*} 
+\end{equation*}
 \end{proof}
 
 Veamos si con la información que tenemos hasta el momento podemos dar una fórmula para el margen geométrico de un hiperplano respecto a un conjunto de datos.\\
@@ -366,7 +371,7 @@ Este modelo de aprendizaje de máquina recibe el nombre de ``máquina de vectore
 
 Dado que hay software especializado para resolver problemas de programación cuadrática, podríamos dar por finalizada la discusión. Sin embargo, todavía hay cosas que decir acerca del problema $(P)$. Aplicando la Teoría de Dualidad de Lagrange, podremos comprender más profundamente lo que acabamos de hacer y descubriremos nuevas técnicas en el proceso.
 
-\section{El problema dual}
+\section{El Problema Dual}
 Empecemos por escribir $(P)$ de la siguiente manera:
 \begin{equation*}
 \begin{aligned}
@@ -488,8 +493,59 @@ donde $\x_{s}$ es cualquier vector de soporte. Los vectores de soporte, que son 
 
 En las siguientes secciones veremos que podemos hacer para trabajar con conjuntos de datos que no son linealmente separables.
 
+\section{Máquinas de Vectores de Soporte con Margen Débil}
+Una manera de trabajar con un conjunto de datos $\Dat$ que no es linealmente separable es permitir que haya puntos dentro del margen lo cual permite que haya puntos mal clasificados. Para precisar esto, tenemos la siguiente definición motivada por los resultados de la (SECCIÓN).
 
+\begin{definition}
+Sea $H=H(\wv, b)$ un hiperplano con $\wv\ne\z$. Definimos el margen de $H(\wv, b)$ como:
+$$\gamma (\wv, b)=\frac{1}{\nw}$$
+\end{definition}
 
+Observamos que esta definición de margen \emph{no depende de $\Dat$}. Un mismo hiperplano, pensado como ente geométrico, tiene una infinidad de márgenes dependiendo del valor de $\nw$ en la representación $H=H(\wv, b)$. Los puntos de $\Rn$ quedan clasificados de la siguiente manera (la clasificación es relativa a la representación $H=H(\wv, b)$:
+\begin{enumerate}
+\item $\x\in\Rn$ tales que $\wv^{T}\x+b\leq -1$ (tipo I).
+\item $\x\in\Rn$ tales que $-1<\wv^{T}\x+b<1$ (tipo II).
+\item $\x\in\Rn$ tales que $1\leq\wv^{T}\x+b$ (tipo III).
+\end{enumerate}
 
+Usar hiperplanos con margen fuerte es equivalente a insistir en que los puntos de $\Dat$ sean de tipo I ó tipo III exclusivamente. De estos, los que satisfacen $\wv^{T}\x+b=-1$ o $\wv^{T}\x+b=1$ están sobre el margen del hiperplano. Para permitir la posibilidad de que haya puntos de $\Dat$ de tipo III, e incluso puntos de $\Dat$ mal clasificados, para cada $(\x_{i}, y_{i})$ consideramos la cantidad $\xi_{i}\geq0$, que captura que tanto no se respeta el margen de $H(\wv, b)$, y nos concentramos en resolver el problema de optimización restricta $(P')$:
 
+\begin{equation*}
+\begin{aligned}
+ \underset{(b,\wv, \xiv)\in \Runm}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv&+C\sum_{i=1}^{m}\xi_{i}  \\
+\text{s.a.}\ \
+ y_{i}(\wv^{T}\x_{i}+b)&\geq1-\xi_{i}\ \ &&\forall i=\Sm\\
+ \xi_{i}&\geq0\ \ &&\forall i=\Sm
+\end{aligned}
+\end{equation*}
+
+Minimizar el término $\frac{1}{2}\wv^{T}\wv$ maximiza el margen de $H(\wv, b)$. Minimizar $\sum_{i=1}^{m}\xi_{i}$ en presencia de las restricciones $\xi_{i}\geq0$ empuja a que cada $\xi_{i}$ sea pequeño. Por lo tanto, minimizar la suma de ambos términos es encontrar un hiperplano con margen grande y para el cual $\Dat$ tiende a respetar el margen. A mayor valor de $C$, mayor es la importancia que se le dá a respetar el margen del hiperplano.\\
+
+Podemos observar que el problema $(P')$ tiene las mismas propiedades básicas que el problema $(P)$ con margen fuerte:
+\begin{itemize}
+\item Es un problema factible. (ejercicio)
+\item Es un problema convexo, diferenciable y acotado inferiormente. Esto último porque $f(b, \wv, \xiv)=\frac{1}{2}\wv^{T}\wv+C\sum_{i=1}^{m}\xi_{i}\geq0$ $\forall(b,\wv,\xiv)\in S_{(P')}$.
+\item Es un problema de programación cuadrática (¿por qué?).
+\end{itemize}
+
+Como en el caso de margen fuerte, exploraremos el correspondiente problema dual. Comprenderemos con mayor profundidad la situación y veremos una técnica especial para resolver el proble dual: el algoritmo SMO.
+
+\section{Problema Dual para Margen Débil}
+El proceso es completamente análogo al del margen fuerte. Reescribimos $(P')$:
+\begin{equation*}
+\begin{aligned}
+ \underset{(b,\wv, \xiv)\in \Runm}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv&+C\sum_{i=1}^{m}\xi_{i}  \\
+\text{s.a.}\ \
+ 1-\xi_{i}-[y_{i}(\wv^{T}\x_{i}+b)]&\leq0\ \ &&\forall i=\Sm\\
+ -\xi_{i}&\leq0\ \ &&\forall i=\Sm
+\end{aligned}
+\end{equation*}
+
+El lagrangiano $\La:(\R\times\Rn\times\Rm)\times(\Rm\times\Rm)\rightarrow\R$ está dado por:
+\begin{equation*}
+\begin{aligned}
+\La(b, \wv, \xiv, \av, \bev)&=\frac{1}{2}\wv^{T}\wv+C\sum_{i=1}^{m}\xii+\sum_{i=1}^{m}\ali\{1-\xii-[y_{i}(\wv^{T}\x_{i}+b)]\}+\sum_{i=1}^{m}\bei(-\xii)\\
+&=\frac{1}{2}
+\end{aligned}
+\end{equation*}
 \end{document}
