@@ -24,6 +24,7 @@
 \newcommand{\lv}{\overline{\lambda}}
 \newcommand{\xiv}{\overline{\xi}}
 \newcommand{\thv}{\overline{\theta}}
+\newcommand{\uv}{\overline{u}}
 \newcommand{\av}{\overline{\alpha}}
 \newcommand{\bev}{\overline{\beta}}
 \newcommand{\wv}{\overline{w}}
@@ -61,8 +62,12 @@
 \newcommand{\wo}{\wv_{*}}
 \newcommand{\wc}{\wv^{'}}
 \newcommand{\avo}{\av^{*}}
+\newcommand{\bevo}{\bev^{*}}
+\newcommand{\xivo}{\xiv^{*}}
 \newcommand{\alio}{\alpha_{i}^{*}}
 \newcommand{\aljo}{\alpha_{j}^{*}}
+\newcommand{\xiio}{\xi_{i}^{*}}
+\newcommand{\beio}{\beta_{i}^{*}}
 
 \newcommand{\xc}{\widetilde{x}}
 \newcommand{\muc}{\widetilde{\mu}}
@@ -395,7 +400,7 @@ Calculemos la función dual $g(\av)$. Para ello, fijamos $\av\in\Rm$ y buscamos 
 & \underset{(b, \wv)\in \Rnu}{\text{mín}}\ \ \ \frac{1}{2}\wv^{T}\wv-\sum_{i=1}^{m}\ali y_{i}\wv^{T}\x_{i} -b\sum_{i=1}^{m}\ali y_{i}+\sum_{i=1}^{m}\ali
 \end{aligned}
 \end{equation*}
-Esta función objetivo $k=k_{\av}=\La(\ \cdot\ ,\ \cdot\ ,\av)$ es convexa. Por lo tanto, basta resolver $\nabla k(b, \wv)=\overline{0}_{n+1}$.
+Esta función objetivo $k=k_{\av}=\La(\ \cdot\ ,\ \cdot\ ,\av)$ es convexa en $\Rnu$. Por lo tanto, basta resolver $\nabla k(b, \wv)=\overline{0}_{n+1}$.
 Tenemos que:
 \begin{equation*}
 \begin{aligned}
@@ -508,7 +513,7 @@ Observamos que esta definición de margen \emph{no depende de $\Dat$}. Un mismo 
 \item $\x\in\Rn$ tales que $1\leq\wv^{T}\x+b$ (tipo III).
 \end{enumerate}
 
-Usar hiperplanos con margen fuerte es equivalente a insistir en que los puntos de $\Dat$ sean de tipo I ó tipo III exclusivamente. De estos, los que satisfacen $\wv^{T}\x+b=-1$ o $\wv^{T}\x+b=1$ están sobre el margen del hiperplano. Para permitir la posibilidad de que haya puntos de $\Dat$ de tipo III, e incluso puntos de $\Dat$ mal clasificados, para cada $(\x_{i}, y_{i})$ consideramos la cantidad $\xi_{i}\geq0$, que captura que tanto no se respeta el margen de $H(\wv, b)$, y nos concentramos en resolver el problema de optimización restricta $(P')$:
+Usar hiperplanos con margen fuerte es equivalente a insistir en que los puntos de $\Dat$ sean de tipo I ó tipo III exclusivamente. De estos, los que satisfacen $\wv^{T}\x+b=-1$ o $\wv^{T}\x+b=1$ están sobre el margen del hiperplano. Para permitir la posibilidad de que haya puntos de $\Dat$ de tipo II, e incluso puntos de $\Dat$ mal clasificados, para cada $(\x_{i}, y_{i})$ introducimos la cantidad $\xi_{i}\geq0$, que captura que tanto el punto $\x_{i}$ puede no respetar el margen de $H(\wv, b)$, y nos concentramos en resolver el problema de optimización restricta $(P')$:
 
 \begin{equation*}
 \begin{aligned}
@@ -536,7 +541,7 @@ El proceso es completamente análogo al del margen fuerte. Reescribimos $(P')$:
 \begin{aligned}
  \underset{(b,\wv, \xiv)\in \Runm}{\text{mín}}\ \frac{1}{2}\wv^{T}\wv&+C\sum_{i=1}^{m}\xi_{i}  \\
 \text{s.a.}\ \
- 1-\xi_{i}-[y_{i}(\wv^{T}\x_{i}+b)]&\leq0\ \ &&\forall i=\Sm\\
+ 1-\xi_{i}-y_{i}(\wv^{T}\x_{i}+b)&\leq0\ \ &&\forall i=\Sm\\
  -\xi_{i}&\leq0\ \ &&\forall i=\Sm
 \end{aligned}
 \end{equation*}
@@ -544,8 +549,85 @@ El proceso es completamente análogo al del margen fuerte. Reescribimos $(P')$:
 El lagrangiano $\La:(\R\times\Rn\times\Rm)\times(\Rm\times\Rm)\rightarrow\R$ está dado por:
 \begin{equation*}
 \begin{aligned}
-\La(b, \wv, \xiv, \av, \bev)&=\frac{1}{2}\wv^{T}\wv+C\sum_{i=1}^{m}\xii+\sum_{i=1}^{m}\ali\{1-\xii-[y_{i}(\wv^{T}\x_{i}+b)]\}+\sum_{i=1}^{m}\bei(-\xii)\\
-&=\frac{1}{2}
+\La(b, \wv, \xiv, \av, \bev)&=\frac{1}{2}\wv^{T}\wv+C\sum_{i=1}^{m}\xii+\sum_{i=1}^{m}\ali[1-\xii-y_{i}(\wv^{T}\x_{i}+b)]+\sum_{i=1}^{m}\bei(-\xii)\\
+&=\frac{1}{2}\wv^{T}\wv-\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\wv+\sum_{i=1}^{m}(C-\ali-\bei)\xii+\sum_{i=1}^{m}\ali-b\sum_{i=1}^{m}\ali y_{i}
 \end{aligned}
 \end{equation*}
+Para calcular la función dual $g(\av, \bev)$ fijamos $(\av, \bev)\in\Rm\times\Rm$ y buscamos el valor óptimo del problema irrestricto $(Q'_{\av, \bev})$:
+\begin{equation*}
+\begin{aligned}
+& \underset{(b, \wv, \xiv)\in \Rnu\times\Rm}{\text{mín}}\ \ \ \frac{1}{2}\wv^{T}\wv-\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\wv+\sum_{i=1}^{m}(C-\ali-\bei)\xii+\sum_{i=1}^{m}\ali-b\sum_{i=1}^{m}\ali y_{i}
+\end{aligned}
+\end{equation*}
+Esta función objetivo $k=k_{\av,\bev}=\La(\ \cdot\ ,\ \cdot\ ,\cdot\ , \av, \bev)$ es convexa en $\Runm$. Por lo tanto, es suficiente resolver la ecuación $\nabla k(b, \wv, \xiv)=\overline{0}_{m+n+1}$. Tenemos que:
+\begin{equation*}
+\begin{aligned}
+\frac{\partial k}{\partial b}(b, \wv, \xiv)&=-\sum_{i=1}^{m}\ali y_{i}\\
+\frac{\partial k}{\partial \wv}(b, \wv, \xiv)&=\wv-\sum_{i=1}^{m}\ali y_{i}\x_{i}\\
+\frac{\partial k}{\partial \xiv}(b, \wv, \xiv)&=C\uv-\av-\bev
+\end{aligned}
+\end{equation*}
+donde $\uv=[1, 1,\ldots, 1]^{T}\in\Rm$. Así, $\nabla k(b, \wv, \xiv)=\overline{0}_{m+n+1}$ si y solamente si
+\begin{equation*}
+\begin{aligned}
+&\sum_{i=1}^{m}\ali y_{i}=0\\
+&\wv=\sum_{i=1}^{m}\ali y_{i}\x_{i}\\
+&\ali+\bei=C\ \ \ \ \ \forall i=\Sm
+\end{aligned}
+\end{equation*}
+Razonando como en el caso de margen fuerte, tenemos que:
+\begin{equation*}
+\begin{aligned}
+A&=\{(\av, \bev)\in\Rm\times\Rm:\ g(\av, \bev)>-\infty\}\\
+&=\{(\av, \bev)\in\Rm\times\Rm:\ \sum_{i=1}^{m}\ali y_{i}=0\ \ \text{y}\ \ \ali+\bei=C,\ \ \forall i=\Sm\}
+\end{aligned}
+\end{equation*}
+Por lo tanto, para $(\av, \bev)\in A$ tenemos que:
+\begin{equation*}
+\begin{aligned}
+g(\av, \bev)&=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)-\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)+\sum_{i=1}^{m}\ali\\
+&=\frac{1}{2}\wv^{T}\wv-\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\wv+\sum_{i=1}^{m}\ali\\
+&=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}+\sum_{i=1}^{m}\ali
+\end{aligned}
+\end{equation*}
+Entonces, el problema dual $(D')$ se puede escribir como:
+\begin{equation*}
+\begin{aligned}
+\underset{(\av, \bev)\in\Rm\times\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\ali \\
+\text{s.a.}\ \
+& \sum_{i=1}^{m}\ali y_{i}=0\\
+& \ali+\bei=C &&\forall i=\Sm\\
+& \ali\geq0 &&\forall i=\Sm\\
+& \bei\geq0 &&\forall i=\Sm
+\end{aligned}
+\end{equation*}
+
+El problema $(D')$ es un problema convexo de programación cuadrática. Es posible verificar que $(P')$ satisface las hipótesis del Teorema de Slater. Por lo tanto, $(D')$ tiene solución y hay dualidad fuerte.\\
+
+Sean $(\bo, \wo, \xivo)\in\Runm$ y $(\avo, \bevo)\in\Rm\times\Rm$ puntos óptimos de $(P')$ y $(D')$ respectivamente. La dualidad fuerte implica, por el (PRELIMINARES), que se cumplen las cuatro condiciones de Karush--Kuhn--Tucker:
+\begin{itemize}
+\item[(i)] $y_{i}(\wo^{T}\x_{i}+\bo)\geq1-\xiio,\quad \xiio\geq0,\quad \forall i=\Sm$
+\item[(ii)] $\alio\geq0,\quad\beio\geq0,\quad\forall i=\Sm$
+\item[(iii)] $\alio[1-\xiio-y_{i}(\wo^{T}\x_{i}+\bo)]=0,\quad\beio\xiio=0,$ $\forall i=\Sm$
+\item[(iv)] $\nabla k_{\avo,\bevo}(\bo, \wo, \xivo)=\overline{0}_{m+n+1}$ lo cual significa que:
+\begin{equation*}
+\begin{aligned}
+&\sum_{i=1}^{m}\alio y_{i}=0\\
+&\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}\\
+&\alio+\beio=C\ \ \ \ \ \forall i=\Sm
+\end{aligned}
+\end{equation*}
+\end{itemize}
+Tenemos que entonces $\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}$.
+
+--La condición $\ali+\bei=C$ equivale a $\ali\leq C$, en presencia de $\bei\geq0$. Podemos entonces considerar el problema equivalente $(D'')$:(ejercicio)
+\begin{equation*}
+\begin{aligned}
+\underset{\av\in\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\ali \\
+\text{s.a.}\ \
+& \sum_{i=1}^{m}\ali y_{i}=0\\
+& 0\leq\ali\leq C &&\forall i=\Sm\\
+\end{aligned}
+\end{equation*}
+--
 \end{document}
