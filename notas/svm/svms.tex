@@ -428,9 +428,9 @@ Haciendo la sustitución mencionada tenemos que $\forall\av\in A$:
 \begin{aligned}
 g(\av)&=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)-\sum_{i=1}^{m}\ali y_{i}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)^{T}\x_{i} +\sum_{i=1}^{m}\ali\\
 &=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}^{T}\right)\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}\right)-\sum_{i=1}^{m}\ali y_{i}\left(\sum_{j=1}^{m}\alj y_{j}\x_{j}^{T}\right)\x_{i} +\sum_{i=1}^{m}\ali\\
-&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{j}^{T}x_{i}+\sum_{i=1}^{m}\ali\\
-&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}+\sum_{i=1}^{m}\ali\\
-&=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}+\sum_{i=1}^{m}\ali
+&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{j}^{T}\x_{i}+\sum_{i=1}^{m}\ali\\
+&=\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}-\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}+\sum_{i=1}^{m}\ali\\
+&=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}+\sum_{i=1}^{m}\ali
 \end{aligned}
 \end{equation*}
 Recordemos que el problema dual $(D)$ es:
@@ -593,7 +593,7 @@ g(\av, \bev)&=\frac{1}{2}\left(\sum_{i=1}^{m}\ali y_{i}\x_{i}\right)^{T}\left(\s
 Entonces, el problema dual $(D')$ se puede escribir como:
 \begin{equation*}
 \begin{aligned}
-\underset{(\av, \bev)\in\Rm\times\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\ali \\
+\underset{(\av, \bev)\in\Rm\times\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}-\sum_{i=1}^{m}\ali \\
 \text{s.a.}\ \
 & \sum_{i=1}^{m}\ali y_{i}=0\\
 & \ali+\bei=C &&\forall i=\Sm\\
@@ -618,16 +618,51 @@ Sean $(\bo, \wo, \xivo)\in\Runm$ y $(\avo, \bevo)\in\Rm\times\Rm$ puntos óptimo
 \end{aligned}
 \end{equation*}
 \end{itemize}
-Tenemos que entonces $\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}$.
+Tenemos que entonces $\wo=\sum_{i=1}^{m}\alio y_{i}\x_{i}$. Como en el caso de margen fuerte, el valor óptimo de $\wv$ es una combinación lineal de los vectores en el conjunto de datos $\Dat$. Podemos hacer las siguientes observaciones:\\
+\begin{observation}
+Sea $i=\Sm$ cualquiera.
+\begin{enumerate} 
+\item Si $\alio=0$, entonces $y_{i}(\wo^{T}\x_{i}+\bo)\geq1$.\\
+Esto porque $\alio=0$ implica, por la condición (KKT) en (iv), que $\beio=C>0$. Esto implica, por la condición (KKT) en (ii), que $\xiio=0$. El resultado se sigue entonces de la condición (KKT) en (i).
 
---La condición $\ali+\bei=C$ equivale a $\ali\leq C$, en presencia de $\bei\geq0$. Podemos entonces considerar el problema equivalente $(D'')$:(ejercicio)
+\item Si $\alio>0$, entonces $y_{i}(\wo^{T}\x_{i}+\bo)\leq1$.\\
+Tener $\alio>0$ implica que $1-\xiio-y_{i}(\wo^{T}\x_{i}+\bo)=0$ por la condición (KKT) en (iii). Entonces:
+$$y_{i}(\wo^{T}\x_{i}+\bo)=1-\xiio\leq1$$
+
+\item Si $\alio<C$, entonces $y_{i}(\wo^{T}\x_{i}+\bo)\geq1$.\\
+Por la condición (KKT) en (iv), $\alio<C$ implica $\beio>0$. El resultado se obtiene razonando como en 1.
+
+\item Si $0<\alio<C$, entonces $y_{i}(\wo^{T}\x_{i}+\bo)=1$.\\
+Esto es consecuencia de las dos observaciones anteriores.
+
+\item Si $\alio=C$, entonces $y_{i}(\wo^{T}\x_{i}+\bo)\leq1$.\\
+Suponer $\alio=C>0$ implica $\alio>0$ y se razona como en 2.
+\end{enumerate}
+\end{observation}
+Sea $j=\Sm$ cualquiera. Tenemos la siguiente terminología:
+\begin{itemize}
+\item[(i)] Si $\aljo>0$, diremos que $\x_{j}$ es un \emph{vector de soporte}.
+\item[(ii)] Si $0<\aljo<C$, diremos que $\x_{j}$ es un \emph{vector de soporte libre o no--acotado}.
+\item[(iii)] Si $\aljo=C$, diremos que $\x_{j}$ es un \emph{vector de soporte acotado}.
+\end{itemize}
+Los vectores de soporte libres son aquellos que están sobre el margen del hiperplano óptimo. Los vectores de soporte acotados pueden estar sobre el margen del hiperplano óptimo, pueden no respetar el margen y estar correctamenta clasificados y también pueden no respetar el margen y estar mal clasificados.\\
+
+Veamos como recuperar $\bo$ y $\xivo$ a partir de la solución del problema dual. Empecemos por $\bo$. Si $\x_{i}$ es un vector de soporte libre, se tiene que:
+$$y_{i}(\wo^{T}\x_{i}+\bo)=1$$
+lo cual es suficiente para despejar $\bo$. En la práctica ``siempre'' sucede que existe al menos un vector de soporte libre. En caso de que no haya ninguno, es posible encontrar al menos un intervalo para $\bo$.\\
+
+Ahora veamos que sucede con $\xivo$. Sabemos que:
+$$y_{i}(\wo^{T}\x_{i}+\bo)\geq1-\xiio,\quad \xiio\geq0,\quad \forall i=\Sm$$
+y por lo tanto, tomamos $\xiio=\text{máx}\{1-y_{i}(\wo^{T}\x_{i}+\bo), 0\}\quad\forall i=\Sm$.\\
+
+Para simplificar un poco el problema $(D')$, observemos que la condición $\ali+\bei=C$ equivale a $\ali\leq C$, en presencia de $\bei\geq0$. Podemos entonces considerar el problema equivalente $(D'')$:(ejercicio)
 \begin{equation*}
 \begin{aligned}
-\underset{\av\in\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}x_{j}-\sum_{i=1}^{m}\ali \\
+\underset{(\av, \bev)\in\Rm\times\Rm}{\text{mín}}\ \frac{1}{2}&\sum_{i=1}^{m}\sum_{j=1}^{m}y_{i}y_{j}\ali\alj\x_{i}^{T}\x_{j}-\sum_{i=1}^{m}\ali \\
 \text{s.a.}\ \
 & \sum_{i=1}^{m}\ali y_{i}=0\\
 & 0\leq\ali\leq C &&\forall i=\Sm\\
 \end{aligned}
 \end{equation*}
---
+
 \end{document}
