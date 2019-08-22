@@ -226,10 +226,7 @@ Subsecuentemente tendríamos que el Hessiano es constante y está dado por
 	\nabla^2 J(\bm\theta) = \bm{X}^T\bm{X}
 \end{equation}
 
-La cual es conocida como la matriz Gramiana y tiene la propiedad de ser posiva semidefinida. Esto anterior indica que existe por lo menos un mínimo global. 
-
-
-Asumiendo que las columnas de $\bm X$ son linealmente independientes, podemos resolver analíticamente $\nabla J(\bm\theta) = \bm 0$ que es fácil ver tiene como resultado
+La cual es conocida como la matriz Gramiana y tiene la propiedad de ser posiva semidefinida. Esto anterior indica que existe por lo menos un mínimo global.  Asumiendo que las columnas de $\bm X$ son linealmente independientes, podemos resolver analíticamente $\nabla J(\bm\theta) = \bm 0$ que es fácil ver tiene como resultado
 
 \begin{equation}\label{eq:normeq}
   \bm\theta^* = \left(\bm X^T\bm X\right)^{-1} \bm{X}^T\bm y
@@ -263,7 +260,7 @@ Dado $\bm\theta^*$, nos quedan dos cuestiones por resolver,
 	\item ¿Qué tanto el modelo refleja la realidad de los datos? Es decir, si tuviéramos datos sobre los cuáles no entrenamos el modelo, ¿sería el error encontrado muy cerca $147$?
 \end{enumerate}
 
-La primera cuestión hace referencia a la búsqueda del modelo óptimo; la segunda al problema de la \textbf{generalización}, un tema muy importante en machine learning.
+La primera cuestión hace referencia a la búsqueda del modelo óptimo; la segunda al problema de la \textbf{generalización}, un tema de gran importancia en el aprendizaje de máquina.
 
 \section*{Ejercicios}
 \begin{enumerate}
